@@ -1,0 +1,56 @@
+<div class="fadeIn animated">
+    <div class="row">
+      <div class="col-6">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title class="row pl-3">
+              <i class="fa fa-user-circle fa-2x"></i>
+              <span class="box-title m-b-0 h5 ml-2">Mi Perfil</span>
+            </mat-card-title>
+            <mat-card-subtitle class="text-muted font-13 mt-1 pl-3"> Información de la cuenta </mat-card-subtitle>
+          </mat-card-header>
+          <hr>
+          <mat-card-content>
+              <div class="col-sm-12 col-xs-12">
+                  <form ngNativeValidate #f="ngForm" (ngSubmit)="confirmUpdate(f.value)">
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Grado</label>
+                      <select class="form-control" [(ngModel)]="usuario.grado" id="grado" name="grado">
+                        <option *ngFor="let item of gradosList" [value]="item.value">{{item.label}}</option>
+                      </select>
+                    </div>
+                      <div class="form-group">
+                          <label for="exampleInputPassword1">Nombres</label>
+                          <input id="nombres" type="text" [(ngModel)]="usuario.nombres" name="nombres" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="exampleInputPassword1">Apellidos</label>
+                          <input id="apellidos" type="text" [(ngModel)]="usuario.apellidos" name="apellidos" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Usuario</label>
+                        <input id="username" type="text" class="form-control" [(ngModel)]="usuario.username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Correo</label>
+                      <input id="email" type="email" class="form-control" [(ngModel)]="usuario.email" name="email" required>
+                  </div>
+                  <!--<div class="form-group">
+                    <label for="exampleInputPassword1">Rol</label>
+                      <select name="grado" id="" class="form-control" [(value)]="usuario.rol">
+                        <option value="admin">Administrador</option>
+                        <option value="user">Usuario</option>
+                      </select>
+                  </div>-->
+                   <div class="d-flex justify-content-end">
+                      <button [disabled]="f.invalid" type="submit" mat-raised-button color="primary" class="btn btn-success waves-effect waves-light m-r-10 form-control">
+                        <i class="fa fa-save"></i>
+                         ACTUALIZAR</button>
+                   </div>
+                  </form>
+              </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>

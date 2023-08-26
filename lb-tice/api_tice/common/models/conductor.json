@@ -1,0 +1,81 @@
+{
+  "name": "conductor",
+  "plural": "conductores",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "codigo": {
+      "type": "string"
+    },
+    "ci": {
+      "type": "number"
+    },
+    "nombres": {
+      "type": "string"
+    },
+    "apellidos": {
+      "type": "string"
+    },
+    "cat_licencia": {
+      "type": "string"
+    },
+    "expedicion": {
+      "type": "string"
+    },
+    "direccion": {
+      "type": "string"
+    },
+    "fecha_nac": {
+      "type": "date"
+    },
+    "tipo_sangre": {
+      "type": "string"
+    },
+    "fotografia": {
+      "type": "string"
+    },
+    "licencia": {
+      "type": "string"
+    },
+    "genero": {
+      "type": "number"
+    },
+    "fecha_registro": {
+      "type": "date"
+    },
+    "id_asociacion": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "antecedentes": {
+      "type": "hasMany",
+      "model": "antecedentes",
+      "foreignKey": "id_conductor"
+    },
+    "tarjeta": {
+      "type": "hasMany",
+      "model": "tarjeta",
+      "foreignKey": "id_conductor"
+    },
+    "asociacion": {
+      "type": "belongsTo",
+      "model": "asociacion",
+      "foreignKey": "id_asociacion"
+    },
+    "vehiculos": {
+      "type": "hasMany",
+      "model": "vehiculo",
+      "foreignKey": "id_conductor"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

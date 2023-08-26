@@ -1,0 +1,86 @@
+.mat-form-field {
+    margin-top: 16px;
+  }
+
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  td {
+    padding-right: 8px;
+  }
+
+  hr{
+    margin:10px 0;
+    background-color: #999999;
+  }
+  
+  .ng-star-inserted ngx-qrcode .aclass img{
+    width:150px !important;
+    height:150px !important;
+  }
+
+  .title-card{
+    font-size: 30px;
+    color:blueviolet;
+    font-weight: bolder;
+  }
+
+  .bg-white{
+    background-color: #fff !important;
+  }
+
+  .fs-20{
+    font-size: 20px;;
+  }
+
+  .card-header {
+    background-color: white;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+mat-card{
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+
+.card-photo{
+  flex-direction: column;
+  padding:10px;
+}
+
+#datos-tarjeta{
+  margin-top: 15px;
+}
+
+.card-body{
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: 1px;
+}
+
+.gestion{
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  line-height: 2rem;
+}
+
+.vertical{
+  width:20px;
+  word-wrap: break-word;
+  text-align:center;
+}

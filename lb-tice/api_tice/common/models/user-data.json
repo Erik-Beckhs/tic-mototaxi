@@ -1,0 +1,37 @@
+{
+  "name": "user_data",
+  "plural": "users_data",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "nombres": {
+      "type": "string",
+      "required": true
+    },
+    "apellidos": {
+      "type": "string"
+    },
+    "grado": {
+      "type": "string"
+    },
+    "state": {
+      "type": "boolean"
+    },
+    "id_user": {
+      "type": "number"
+    },
+    "rol": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

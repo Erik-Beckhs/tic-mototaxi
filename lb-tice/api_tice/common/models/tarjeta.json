@@ -1,0 +1,35 @@
+{
+  "name": "tarjeta",
+  "plural": "tarjetas",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "fecha_inicio": {
+      "type": "date",
+      "required": true
+    },
+    "fecha_fin": {
+      "type": "date",
+      "required": true
+    },
+    "id_conductor": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "conductor": {
+      "type": "belongsTo",
+      "model": "conductor",
+      "foreignKey": "id_conductor"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

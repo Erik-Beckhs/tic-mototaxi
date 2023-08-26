@@ -1,0 +1,143 @@
+<div class="mx-5 border">
+    <form id="tarjeta">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-2 border">
+    
+                    </div>
+                    <div class="col-2 justify-content-center d-flex align-items-center border">
+                        {{data.vehiculo.codigo}}
+                    </div>
+                    <div class="col-3 text-center border">
+                        <ngx-qrcode 
+                            [elementType]="elementType" 
+                            [value] = "value"
+                            cssClass = "aclass"
+                            errorCorrectionLevel = "L">
+                        </ngx-qrcode>
+                    </div>
+                    <div class="col-2 d-flex align-items-center justify-content-center border">
+                        {{data.vehiculo.placa}}
+                    </div>
+                    <div class="col-2 border">
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3 border">
+                        <div class="row">
+                            <div class="col-4 border">
+
+                            </div>
+                            <div class="col-8 border">
+                                {{data.conductor.codigo}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <img [src]="data.conductor.fotografia" class="w-200">
+                        </div>
+                        <div class="row">
+                            <div class="col-4 border">
+
+                            </div>
+                            <div class="col-8 border">
+                                {{data.conductor.ci}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7 border contenido">
+                        <div class="row">
+                            <div class="col-2 border">
+
+                            </div>
+                            <div class="col-10 border">
+                                {{data.conductor.nombres}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2 border">
+
+                            </div>
+                            <div class="col-10 border">
+                                {{data.conductor.apellidos}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 border">
+
+                            </div>
+                            <div class="col-9 border">
+                                {{data.conductor.tipo_sangre}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2 border">
+
+                            </div>
+                            <div class="col-4 border">
+                                {{data.conductor.licencia}}
+                            </div>
+                            <div class="col-2 border">
+
+                            </div>
+                            <div class="col-4 border">
+                                {{data.conductor.cat_licencia}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 border">
+
+                            </div>
+                            <div class="col-9 border">
+                               
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 border">
+
+                            </div>
+                            <div class="col-9 border">
+                                {{data.vehiculo.tipo}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2 border">
+
+                            </div>
+                            <div class="col-4 border">
+                                {{inicio}}
+                            </div>
+                            <div class="col-1 border">
+
+                            </div>
+                            <div class="col-5 border">
+                                {{fin}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 gestion border">
+                        <div class="vertical">
+                         {{gestion}}
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<hr>
+<div class="d-flex justify-content-between mt-3">
+    <button (click)="dialogRef.close()" mat-raised-button color="secondary">
+        <i class="fa fa-done"></i>
+        <span class="ml-1">Cancelar</span>
+    </button>
+    <button mat-raised-button (click)="ajustar()" color="accent">
+        <i class="fa fa-arrows"></i>
+        <span class="ml-1">Ajustar</span>
+    </button>
+    <button mat-raised-button (click)="imprimir()" color="accent">
+        <i class="fa fa-print"></i>
+        <span class="ml-1">Imprimir</span>
+    </button>
+</div>

@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-6">
+        <app-bar-chart2 
+             [data]="dataMonth"
+             [labels]="meses"
+             [valor]="year"
+             title="Tarjetas Generadas por mes">
+        </app-bar-chart2>   
+    </div>
+
+    <div class="col-6">
+        <app-dona 
+            [data]="data2"
+            [labels]="labels2"
+            title="Tipos de Vehiculos registrados">
+        </app-dona>
+    </div>
+</div>
+
+<!--<div class="row">
+    <div class="col-6">
+        <app-dona title="Antecedentes registrados por mes"></app-dona>
+    </div>
+
+    <div class="col-6">
+        <app-dona title="Antecedentes registrados por naturaleza"></app-dona>
+    </div>
+</div>-->
+
+<div class="row">
+    <!-- <div class="col-6">
+       
+        <app-dona [labels]="labels1"
+                  [data]="data1"
+                  title="Cantidad de Conductores por Asociación">
+        </app-dona>
+    </div> -->
+
+    <div class="col-6">
+        <app-dona 
+            [data]="data3"
+            [labels]="labels3"
+            title="Cantidad de Conductores por Género">
+        </app-dona>
+    </div>
+
+
+     <div class="col-6">
+        <app-bar-chart2 
+        title="Cantidad de Conductores por Unidad Educativa"
+        [data]="data4"
+        [labels]="labels4"
+        valor="TICE - SC"
+        ></app-bar-chart2>
+    </div>
+</div>

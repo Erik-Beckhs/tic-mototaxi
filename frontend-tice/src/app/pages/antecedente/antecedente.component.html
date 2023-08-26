@@ -1,0 +1,219 @@
+<div class="p-4 card">
+    <div class="d-flex justify-content-end my-3">
+        <button mat-fab color="secondary" (click)="imprimir()">
+            <mat-icon>print</mat-icon>
+          </button>
+    </div>
+
+    <div id="registro">
+        <div class="row header d-flex justify-content-between mb-2">
+            <div class="col-md-1">
+                <img src="../../../assets/images/bolivia.jpg" class="w-70">
+            </div>
+            <div class="col-md-10 text-center">
+                <p class="h5">Dirección Departamental de Tránsito, Transporte y Seguridad Vial Santa Cruz</p>
+                <p class="h4">Antecedentes</p>
+            </div>
+            <div class="col-md-1"><img src="../../../assets/images/logo-pol.png" class="w-70"></div>
+        </div>
+    
+        <div class="datos">
+            <div class="row">
+                <div class="col-6">
+                     <mat-card style="min-height:300px;">
+                        <mat-card-header class="bg-success text-white p-2">
+                            <i class="fa fa-user fa-2x"></i>
+                            <span class="h5 ml-2">Conductor</span>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="row p-2">
+                            <div class="col-md-5">
+                                <div>
+                                    <img [src]="conductor.fotografia" class="w-200">
+                                    <!--{{conductor.fotografia}}-->
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-500">Código:</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{'CMT-'+conductor.id}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-500">Cedula de Identidad:</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{conductor.ci}} {{conductor.expedicion}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-500">Nombre Completo:</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{conductor.apellidos}} {{conductor.nombres}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-500">Categoria:</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{conductor.cat_licencia}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-500">Licencia:</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{conductor.licencia}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-500">Asociación:</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{conductor.id_asociacion | asociacion}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </mat-card-content>
+                     </mat-card>
+                </div>
+                <div class="col-6">
+                    <mat-card style="min-height:300px;">
+                        <mat-card-header class="bg-success text-white p-2">
+                            <i class="fa fa-motorcycle fa-2x"></i>
+                            <span class="h5 ml-2">Vehículo</span>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="row p-2">
+                                <div class="col-md-5">
+                                    <div>
+                                        <img [src]="vehiculo.img" class="w-200">
+                                        <!--{{conductor.fotografia}}-->
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="fw-500">Placa:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{vehiculo.placa}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="fw-500">Marca:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{vehiculo.marca}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="fw-500">Modelo:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{vehiculo.modelo}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="fw-500">Chasis:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{vehiculo.chasis}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="fw-500">Tipo:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{vehiculo.tipo}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    
+        <mat-card class="tabla-antecedentes mt-4 p-3">
+            <mat-card-header class="d-flex justify-content-between">
+                <mat-form-field appearance="standard" class="mr-2">
+                    <mat-label>Búsqueda</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Escriba una palabra" #input>
+                </mat-form-field>
+                <div>
+                    <button (click)="agregar()" mat-raised-button color="primary">
+                        <mat-icon>add</mat-icon>
+                        AGREGAR ANTECEDENTE
+                    </button>
+                </div>
+            </mat-card-header>
+            
+            <mat-card-content>
+                <table mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="#">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+                      <td mat-cell *matCellDef="let row; let i = index"> {{i+1}} </td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="fecha">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                      <td mat-cell *matCellDef="let row"> {{row.fecha | date:'medium'}} </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="caso">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Caso </th>
+                      <td mat-cell *matCellDef="let row"> {{row.caso}} </td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="disposicion">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Disposición</th>
+                      <td mat-cell *matCellDef="let row"> {{row.disposicion}} </td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="naturaleza">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Naturaleza </th>
+                      <td mat-cell *matCellDef="let row"> {{row.naturaleza}} </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="acciones">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Eliminar </th>
+                      <td mat-cell *matCellDef="let row"> 
+                          <!--<button mat-mini-fab color="primary">
+                              <mat-icon>edit</mat-icon>
+                          </button>-->
+                          <button (click)="eliminar(row.id)" mat-mini-fab color="warn" class="mx-1">
+                              <mat-icon>delete</mat-icon>
+                          </button> 
+                      </td>
+                    </ng-container>
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell" colspan="4">No se encontraron registros</td>
+                    </tr>
+      
+              </table>
+                
+              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

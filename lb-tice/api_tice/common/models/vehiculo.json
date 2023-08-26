@@ -1,0 +1,57 @@
+{
+  "name": "vehiculo",
+  "plural": "vehiculos",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "placa": {
+      "type": "string"
+    },
+    "marca": {
+      "type": "string"
+    },
+    "modelo": {
+      "type": "string"
+    },
+    "codigo": {
+      "type": "string"
+    },
+    "cilindrada": {
+      "type": "string"
+    },
+    "poliza": {
+      "type": "string"
+    },
+    "procedencia": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "chasis": {
+      "type": "string"
+    },
+    "tipo": {
+      "type": "string"
+    },
+    "img": {
+      "type": "string"
+    },
+    "propietario": {
+      "type": "string"
+    },
+    "id_conductor": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

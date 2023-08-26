@@ -1,0 +1,111 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-6">
+          <div class="card card-body border">
+            <div class="row pl-3">
+            <i class="fa fa-car"></i>
+            <span class="box-title m-b-0 h5 pl-2">Datos Vehículo</span>
+            </div>
+            <span class="text-muted font-13"> A continuación ingrese información del vehiculo </span>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <form>
+                        <div class="row">
+                          <div class="col-6">
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Número de Placa</label>
+                              <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Número de Placa">
+                          </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Procedencia</label>
+                              <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Procedencia">
+                          </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Marca</label>
+                                <input type="number" class="form-control" id="exampleInputEmail1" placeholder="Marca">
+                            </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Modelo</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Modelo">
+                            </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Chasis</label>
+                                <input type="number" class="form-control" id="exampleInputEmail1" placeholder="Chasis">
+                            </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Color</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Color">
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Asociación Anterior</label>
+                            <select name="" id="" class="form-control">
+                                <option value="">Sindicato Eduardo Avaroa</option>
+                                <option value="">Sindicato Pedro Domingo Murillo</option>
+                                <option value="">Sindicato 24 de Septiembre</option>
+                                <option value="">Sindicato 06 de Octubre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Asociación Actual</label>
+                            <select name="" id="" class="form-control">
+                                <option value="">Sindicato Eduardo Avaroa</option>
+                                <option value="">Sindicato Pedro Domingo Murillo</option>
+                                <option value="">Sindicato 24 de Septiembre</option>
+                                <option value="">Sindicato 06 de Octubre</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                          <div class="col-6">
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Cilindrada</label>
+                              <input type="text" class="form-control" id="exampleInputEmail1" >
+                          </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Póliza</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" >
+                            </div>
+                          </div>
+                        </div>
+
+                     <!--<div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Guardar</button>
+                        <button type="submit" class="btn btn-inverse waves-effect waves-light">Limpiar</button>
+                     </div>-->
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card card-body border">
+              <div class="box-title m-b-0 h5">Imagen</div>
+              <p class="text-muted m-b-0 font-13"> Nissan 2020 </p>
+              <hr>
+              <div class="row d-flex justify-content-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2016_Toyota_RAV4_%28ASA44R_MY16%29_GX_wagon_%282017-01-15%29_01.jpg/1200px-2016_Toyota_RAV4_%28ASA44R_MY16%29_GX_wagon_%282017-01-15%29_01.jpg" class="w-300">
+                <input type="file" class="my-2" (change)="onFileChange($event)">
+                <button mat-raised-button color="primary" (click)="updateImage()" [disabled]="!imageLoad"  class="btn px-5 form-control scale"><i class="fa fa-save"></i> Actualizar Imagen</button>
+              </div> 
+          </div>
+        </div>
+      </div>
+</div>

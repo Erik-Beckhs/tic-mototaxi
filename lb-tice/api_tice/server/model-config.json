@@ -1,0 +1,62 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "MySQL"
+  },
+  "AccessToken": {
+    "dataSource": "MySQL",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "MySQL",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "MySQL",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "MySQL",
+    "public": false
+  },
+  "asociacion": {
+    "dataSource": "MySQL",
+    "public": true
+  },
+  "conductor": {
+    "dataSource": "MySQL",
+    "public": true
+  },
+  "antecedentes": {
+    "dataSource": "MySQL",
+    "public": true
+  },
+  "tarjeta": {
+    "dataSource": "MySQL",
+    "public": true
+  },
+  "vehiculo": {
+    "dataSource": "MySQL",
+    "public": true
+  },
+  "user_data": {
+    "dataSource": "MySQL",
+    "public": true
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "user",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "email": {
+      "type": "string",
+      "required": true,
+      "index": {
+        "unique": true
+      }
+    },
+    "password": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "id_user": {
+      "type": "hasOne",
+      "model": "user_data",
+      "foreignKey": "id_user"
+    }
+  },
+  "acls": [
+  ],
+  "methods": {
+    "login": {
+      "accepts": [
+        {
+          "arg": "credentials",
+          "type": "object",
+          "required": true,
+          "http": {
+            "source": "body"
+          }
+        },
+        {
+          "arg": "include",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "arg": "accessToken",
+        "type": "object",
+        "root": true
+      },
+      "http": {
+        "verb": "post",
+        "path": "/login"
+      }
+    }
+  }
+}

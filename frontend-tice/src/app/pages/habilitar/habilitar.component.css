@@ -1,0 +1,21 @@
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td {
+    text-align: center;
+    max-width:15%;
+  }
+
+  table th{
+    background-color: #3f51b5;
+    color:aliceblue;
+    font-size: 1rem;
+    text-align: center;
+    max-width:15%;
+  }

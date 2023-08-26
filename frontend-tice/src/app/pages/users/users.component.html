@@ -1,0 +1,94 @@
+<div class="fadeIn animated">
+    <div class="row">
+      <div class="col-8">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title class="row pl-3">
+              <i class="fa fa-user-circle fa-2x"></i>
+              <span class="box-title m-b-0 h5 ml-2">{{state_user}} Usuario</span>
+            </mat-card-title>
+            <mat-card-subtitle class="text-muted font-13 mt-1 pl-3"> Formulario de creación de usuarios </mat-card-subtitle>
+          </mat-card-header>
+          <hr>
+          <mat-card-content>
+              <div class="col-sm-12 col-xs-12">
+                  <form ngNativeValidate #f="ngForm" (ngSubmit)="submitUser(f.value)">
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Grado</label>
+                      <select class="form-control" [(ngModel)]="usuario.grado" id="grado" name="grado">
+                        <option *ngFor="let item of gradosList" [value]="item.value">{{item.label}}</option>
+                      </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Nombres</label>
+                                <input id="nombres" type="text" [(ngModel)]="usuario.nombres" name="nombres" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Apellidos</label>
+                                <input id="apellidos" type="text" [(ngModel)]="usuario.apellidos" name="apellidos" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Usuario</label>
+                                <input id="username" type="text" class="form-control" [(ngModel)]="usuario.username" name="username" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Correo</label>
+                                <input id="email" type="email" class="form-control" [(ngModel)]="usuario.email" name="email" required>
+                              </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Contraseña</label>
+                                <input id="password" type="password" class="form-control" [(ngModel)]="usuario.password" name="password" required>
+                              </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Confirmar Contraseña</label>
+                                <input id="confirm" type="password" class="form-control" [(ngModel)]="usuario.confirm" name="confirm" required>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="state">Estado</label>
+                                <select class="form-control" [(ngModel)]="usuario.state" id="state" name="state">
+                                    <option *ngFor="let item of statesList" [value]="item.value">{{item.label}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="rol">Rol</label>
+                                <select class="form-control" [(ngModel)]="usuario.rol" id="rol" name="rol">
+                                    <option *ngFor="let item of rolesList" [value]="item.value">{{item.label}}</option>
+                                </select>
+                            </div>
+                        </div>
+                      </div>
+                   <div class="d-flex justify-content-end">
+                      <button [disabled]="f.invalid" type="submit" mat-raised-button color="primary" class="btn btn-success waves-effect waves-light m-r-10 form-control">
+                        <i class="fa fa-save"></i>
+                        <span class="mx-1">GUARDAR</span>
+                         </button>
+                   </div>
+                  </form>
+              </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
