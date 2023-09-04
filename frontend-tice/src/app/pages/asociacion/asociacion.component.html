@@ -1,111 +1,24 @@
-<mat-card class="fadeIn animated px-5 py-3">
-  <!--<div class="row d-flex justify-content-end my-2 mr-2" *ngIf="id != 0">
-    <button matTooltip="Editar" *ngIf="edit_state == false" (click)="edit_state = true" mat-mini-fab aria-label="Editar" color="secondary">
-      <mat-icon>edit</mat-icon>
-    </button>
-    <button matTooltip="Cancelar" *ngIf="edit_state == true" (click)="edit_state = false" mat-mini-fab aria-label="Cancelar" color="secondary">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div> --> 
-  <mat-tab-group animationDuration="200ms">
-    <mat-tab label="Datos Generales">
-      <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f.value)">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-6">
-            <mat-card class="py-2" style="min-height:420px;">
-            <mat-card-header class="row pl-3">
-                <mat-card-title>Datos Generales</mat-card-title>
-                <mat-card-subtitle> A continuación ingrese información de la asociación</mat-card-subtitle>
-            </mat-card-header>
-              <hr>
-              <mat-card-content class="row pt-3">
-                  <div class="col-sm-12 col-xs-12">
-                      <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input required type="text" class="form-control" [(ngModel)]="asociacion.nombre" name="nombre" id="nombre">
-                      </div>
-                      <div class="form-group">
-                        <label for="direccion">Dirección</label>
-                        <input required type="text" class="form-control" [(ngModel)]="asociacion.direccion" name="direccion" id="direccion">
-                      </div>
-                      
-                      <div class="row">
-                        <div class="col-6">
-                          <div class="form-group">
-                            <label for="ciudad">Ciudad</label>
-                            <select required class="form-control" name="ciudad" id="ciudad" [(ngModel)]="asociacion.ciudad">
-                              <option disabled value="">Seleccione un valor</option>
-                              <option *ngFor="let item of ciudades" [value]="item">{{item}}</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="form-group">
-                            <label for="fcreacion">Fecha de creación</label>
-                            
-                            <input class="form-control" type="date" [(ngModel)]="asociacion.fcreacion" id="fcreacion" name="fcreacion">
-                          
-                            <!--<input required type="date" class="form-control" [(ngModel)]="asociacion.fcreacion" name="fcreacion" id="fcreacion">-->
-                        </div>
-                        </div>
-                      </div>
-                      
-                      <div class="d-flex justify-content-end">
-                          <!--<button [disabled]="f.invalid" mat-raised-button color="primary" (click)="registrarAsociacion(f.value)" type="submit" class="form-control waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Guardar</button>
-                          <button type="submit" class="btn btn-inverse waves-effect waves-light">Limpiar</button>-->
-                      </div>
-                    
-                  </div>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <div class="col-12 col-md-6 col-lg-6">
-            <mat-card class="pt-2">
-              <mat-card-header>
-                <mat-card-title>Imagen</mat-card-title>
-              </mat-card-header>
-              <hr>
-              <mat-card-content class="mt-3">
-                <div style="text-align:center;">
-                  <img *ngIf="!imageTemp" [src]="asociacion.img | emptyImg" alt="" class="w-200">
-                  <img *ngIf="imageTemp" [src]="imageTemp" alt="" class="w-200">
-                </div>
-                <div style="text-align:center;" *ngIf="edit_state == true">
-                  <input type="file" class="my-2" (change)="onFileChange($event)">
-                </div>
-                <div class="row p-2">
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label for="representante">Representante</label>
-                      <input required type="text" class="form-control" [(ngModel)]="asociacion.representante" name="representante" class="form-control">
-                    </div> 
-                  </div>
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label for="personeria">Personería Jurídica</label>
-                      <input type="text" class="form-control" [(ngModel)]="asociacion.personeria" name="personeria" id="personeria">
-                    </div>
-                  </div>
-                </div>
-  
-              </mat-card-content>   
-              <!--<button mat-raised-button color="primary" (click)="updateImage()" [disabled]="!imageLoad"  class="btn px-5 form-control scale"><i class="fa fa-save"></i> Actualizar Imagen</button>-->
-            </mat-card>
-          </div>
-        </div>
-        <div>
-          <div *ngIf="edit_state == true" class="d-flex justify-content-end m-3">
-            <!--<button mat-raised-button color="accent" type="button" (click)="limpiar()" class="mx-1">
-              <i class="fa fa-eraser"></i>
-              Limpiar
-            </button>-->
-            <button [disabled]="f.invalid" mat-raised-button color="secondary" type="submit"><mat-icon class="pr-3">save</mat-icon> {{id !== 0?'ACTUALIZAR':'GUARDAR'}}</button>
-          </div>
-        </div>
-      </form>
+<mat-card class="fadeIn animated px-4 py-3">
+  <div class="py-2">
+    <div>
+      <mat-card-title class="text-center my-2">
+        REGISTRO DEL SINDICATO
+      </mat-card-title>
+      <mat-card-title class="text-center my-2">
+        {{asociacion.nombre}}
+      </mat-card-title>
+      <mat-card-subtitle class="text-center my-2" *ngIf="asociacion.direccion">
+       {{asociacion.ciudad}} - {{asociacion.direccion}}
+      </mat-card-subtitle>
+    </div>
+  </div>
+  <mat-tab-group  animationDuration="200ms">
+    <mat-tab label="DATOS GENERALES">
+      <app-form-asociacion [id]="id" (create)="asignaId($event)" class="pt-5">
+      </app-form-asociacion>
     </mat-tab>
-    <mat-tab label="Conductores">
-      <app-table-drivers>
+    <mat-tab label="CONDUCTORES" [disabled]="id == 0">
+      <app-table-drivers [id]="id">
       </app-table-drivers>
     </mat-tab>
   </mat-tab-group>

@@ -1,1 +1,162 @@
-<p>saludos desde el form</p>
+<mat-card>
+    <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+        <div class="fadeIn animated row">
+            <div class="col-12 col-md-6 col-lg-6">
+              <mat-card>
+                <div class="row">
+                    <mat-card-header>
+                        <mat-card-title class="ml-2">Datos del Conductor</mat-card-title>
+                        <mat-card-subtitle class="text-muted font-13"> A continuación ingrese información del conductor </mat-card-subtitle>
+                    </mat-card-header>
+                </div>
+                  <!--<ngx-qrcode 
+                      [elementType]="elementType" 
+                      [value] = "value2"
+                      cssClass = "aclass"
+                      errorCorrectionLevel = "L">
+                  </ngx-qrcode>-->
+
+                <hr>
+                <mat-card-content>
+                    <div class="form-group">
+                        <label for="nombres">Nombres</label>
+                        <span class="text-danger">*</span>
+                        <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.nombres" name="nombres"  id="nombres">
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos</label>
+                        <span class="text-danger">*</span>
+                        <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.apellidos" name="apellidos"  id="apellidos">
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group">
+                          <label for="ci">Documento de Identidad</label>
+                          <span class="text-danger">*</span>
+                          <input [readonly]="!edit_state" required type="number" [(ngModel)]="conductor.ci" name ="ci" class="form-control" id="ci" >
+                      </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group">
+                          <label for="expedicion">Lugar de Expedición</label>
+                          <span class="text-danger">*</span>
+                          <select [disabled]="!edit_state" required name="expedicion" id="expedicion" class="form-control" [(ngModel)]="conductor.expedicion">
+                            <option value="" disabled>Elija una opción</option>
+                            <option *ngFor="let item of expedicionesList" [value]="item.valor">{{item.valor}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group">
+                          <label for="fecha_nac">Fecha de Nacimiento</label>
+                          <span class="text-danger">*</span>
+
+                          <input [readonly]="!edit_state" required type="date" class="form-control" [value]="conductor.fecha_nac" [(ngModel)]="conductor.fecha_nac" name="fecha_nac"  id="fecha_nac">
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                          <label for="genero">Género</label>
+                          <span class="text-danger">*</span>
+                          <select [disabled]="!edit_state" required name="genero" id="genero" class="form-control" [(ngModel)]="conductor.genero">
+                            <option value="" disabled>Elija una opción</option>
+                            <option *ngFor="let item of generosList" [value]="item.valor">{{item.name}}</option>
+                          </select>
+                        </div>
+                       </div>
+                    </div>
+                  <!--<div class="form-group">
+                    <label for="exampleInputPassword1">Nacionalidad</label>
+                    <select class="form-control" [value]="conductor.nacionalidad" name="nacionalidad" id="">
+                      <option value="">Argentina</option>
+                      <option value="">Brasil</option>
+                      <option value=""></option>
+                    </select>
+                  </div>-->
+                <div class="form-group">
+                  <label for="direccion">Dirección</label>
+                  <span class="text-danger">*</span>
+                  <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.direccion" name="direccion"  id="direccion">
+                </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+              <mat-card style="min-height:538px;">
+                <div class="row px-2 d-flex justify-content-between">
+                    <mat-card-header>
+                        <mat-card-title> Imagen </mat-card-title>
+                        <mat-card-subtitle>
+                            Información Adicional
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <div *ngIf="id != 0" >
+                        <button matTooltip="Editar" *ngIf="edit_state == false" (click)="edit_state = true" mat-mini-fab aria-label="Editar" color="secondary">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                        <button matTooltip="Cancelar" *ngIf="edit_state == true" (click)="edit_state = false" mat-mini-fab aria-label="Cancelar" color="secondary">
+                          <mat-icon>close</mat-icon>
+                        </button>
+                      </div>
+                </div>
+                <hr>   
+                
+                <mat-card-content>
+                    <div style="text-align:center;">
+                        <img [src]="conductor.fotografia" alt="fotografía" class="w-200" />
+                      </div>
+                      <div style="text-align:center;">
+                        <input [readonly]="!edit_state" type="file" class="my-2" (change)="onFileChange($event)">
+                      </div>
+
+                  <div class="mt-2">
+                    <div class="form-group">
+                      <label for="licencia">Licencia de Conducir</label>
+                      <span class="text-danger">*</span>
+                      <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.licencia" name="licencia"  id="licencia" >
+                    </div>
+                    <div class="form-group">
+                      <label for="sindicato">Sindicato  / Asociación</label>
+                      <select [disabled]="!edit_state" class="form-control" name="id_asociacion" id="id_asociacion" [(ngModel)]="conductor.id_asociacion">
+                        <option value='' disabled>Elija una opciòn</option>
+                        <option *ngFor="let item of sindicatosList" [value]="item.id">{{item.nombre}}</option>
+                      </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                              <label for="tipo_sangre">Tipo de Sangre</label>
+                              <span class="text-danger">*</span>
+                              <select [disabled]="!edit_state" required name="tipo_sangre" id="tipo_sangre" class="form-control" [(ngModel)]="conductor.tipo_sangre">
+                                <option value='' disabled>Elija una opciòn</option>
+                                <option *ngFor="let item of tiposangreList" [value]="item.value">{{item.name}}</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-group">
+                              <label for="cat_licencia">Categoria</label>
+                              <span class="text-danger">*</span>
+                              <select [disabled]="!edit_state" required name="cat_licencia" id="cat_licencia" class="form-control" [(ngModel)]="conductor.cat_licencia">
+                                <option value="" disabled>Elija una opciòn</option>
+                                <option *ngFor="let item of categoriasList" [value]="item">{{item}}</option>
+                              </select>
+                            </div>
+                          </div>
+                    </div>
+                  </div>
+                </mat-card-content>   
+              </mat-card>
+            </div>
+        </div>
+
+        <div *ngIf="edit_state == true" class="d-flex justify-content-center mt-3">
+          <button mat-raised-button [disabled]="f.invalid" color="primary"> 
+            <mat-icon class="pr-3">save</mat-icon>
+            GUARDAR 
+        </button>
+        </div>
+      </form>
+</mat-card>

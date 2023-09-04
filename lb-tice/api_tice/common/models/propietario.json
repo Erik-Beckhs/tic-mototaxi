@@ -1,0 +1,54 @@
+{
+  "name": "propietario",
+  "plural": "propietarios",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "ci": {
+      "type": "string"
+    },
+    "nombres": {
+      "type": "string"
+    },
+    "apellidos": {
+      "type": "string"
+    },
+    "direccion": {
+      "type": "string"
+    },
+    "expedicion": {
+      "type": "string"
+    },
+    "fecha_nac": {
+      "type": "date"
+    },
+    "fecha_registro": {
+      "type": "date"
+    },
+    "fotografia": {
+      "type": "string"
+    },
+    "genero": {
+      "type": "string"
+    },
+    "tipo_sangre": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "vehiculos": {
+      "type": "hasMany",
+      "model": "vehiculo",
+      "foreignKey": "id_propietario"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

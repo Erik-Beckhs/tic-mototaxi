@@ -7,8 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AntecedentesService } from 'src/app/services/antecedentes.service';
 import { ConductorService } from 'src/app/services/conductor.service';
 import { VehiculoService } from 'src/app/services/vehiculo.service';
-import { AntecedenteDialogComponent } from '../antecedente-dialog/antecedente-dialog.component';
-import { UserData } from '../consultar/consultar.component';
+import { AntecedenteDialogComponent } from '../../components/antecedente-dialog/antecedente-dialog.component';
+//import { UserData } from '../consultar/consultar.component';
 
 import swal from 'sweetalert';
 import * as printJS from 'print-js';
@@ -30,7 +30,7 @@ export class AntecedenteComponent implements OnInit {
   antecedentes:any[]=[];
 
   displayedColumns: string[] = ['#', 'fecha', 'caso', 'disposicion', 'naturaleza', 'acciones'];
-  dataSource: MatTableDataSource<UserData>;
+  //dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -56,20 +56,20 @@ export class AntecedenteComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    //this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+    // }
   }
 
   loadAntecedentes(){
     this._antecedente.getAntecedentesById(this.id).subscribe((res:any)=>{
       this.antecedentes = res;
-      this.dataSource = new MatTableDataSource(this.antecedentes);
+      // this.dataSource = new MatTableDataSource(this.antecedentes);
 
-      this.dataSource.paginator = this.paginator;
-                  this.dataSource.sort = this.sort;
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
     })
   }
 

@@ -14,25 +14,25 @@ export class ConductorService {
 
   }
 
-  registraConductor(conductor:any){
+  save(item:any){
     let url = `${base_url}/conductores`;
-    return this.http.post(url, conductor);
+    return this.http.post(url, item);
   }
 
-  modificaConductor(conductor:any, idConductor:string){
-    let url = `${base_url}/conductores/${idConductor}`;
-    return this.http.patch(url, conductor);
+  update(id:number, item:any, ){
+    let url = `${base_url}/conductores/${id}`;
+    return this.http.patch(url, item);
   }
 
   getConductores(){
-      let url = `${base_url}/conductores`;
+      let url = `${base_url}/conductores?filter[include]=asociacion&filter[include]=vehiculos`;
       return this.http.get(url);
   }
 
-  getConductoresInfoGral(){
-    let url = `${base_url}/conductores/ListadoDeConductores`;
-    return this.http.get(url);
-  }
+  // getConductoresInfoGral(){
+  //   let url = `${base_url}/conductores/ListadoDeConductores`;
+  //   return this.http.get(url);
+  // }
 
   deleteConductor(id:any){
     let url = `${base_url}/conductores/${id}`;
@@ -40,11 +40,11 @@ export class ConductorService {
   }
 
   getConductorById(id:any){
-    let url = `${base_url}/conductores/${id}`;
+    let url = `${base_url}/conductores/${id}?filter[include]=vehiculos`;
     return this.http.get(url);
   }
   
-  lastID(){
+  getLastID(){
     let url = `${base_url}/conductores/ultimoID`;
     return this.http.get(url)
     .pipe(map(
@@ -55,5 +55,12 @@ export class ConductorService {
   getCountDriversByGenero(){
     let url= `${base_url}/conductores/countByGenero`;
     return this.http.get(url);
+  }
+
+  getDriversByIdUnion(id:number){
+    let url= `${base_url}/conductores?filter[include]=asociacion&filter[include]=vehiculos&filter[where][id_asociacion]=${id}`;
+    return this.http.get(url);
+
+    // return Api().get(`/servicios/${id}?filter[include]=formas_pago&filter[include]=horarios`);
   }
 }

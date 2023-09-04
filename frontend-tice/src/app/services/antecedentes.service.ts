@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod';
+import { map } from 'rxjs/operators';
 
 const base_url = environment.base_url;
 
@@ -42,5 +43,17 @@ export class AntecedentesService {
   delete(id:any){
     let url = `${base_url}/antecedentess/${id}`;
     return this.http.delete(url);
+  }
+
+  getLastId(){
+    let url = `${base_url}/antecedentess?filter[order]=id%20DESC`;
+    return this.http.get(url).pipe(
+      map(data=>data[0])
+    )
+  }
+
+  update(id:number, body:any){
+    let url = `${base_url}/antecedentess/${id}`;
+    return this.http.patch(url, body);
   }
 }

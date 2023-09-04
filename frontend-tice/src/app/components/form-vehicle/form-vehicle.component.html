@@ -1,0 +1,181 @@
+<mat-card>
+    <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+       <div class="fadeIn animated row">
+        
+          <div class="col-12 col-md-6 col-lg-6">
+            <mat-card>
+              <div class="row">
+                <mat-card-header>
+                    <mat-card-title class="ml-2">Datos del Vehículo</mat-card-title>
+                    <mat-card-subtitle class="text-muted font-13"> A continuación ingrese información del vehiculo </mat-card-subtitle>
+                </mat-card-header>
+              </div>
+              <hr>
+
+                  <mat-card-content>
+                      
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="placa">Número de Placa</label>
+                                    <span class="text-danger">*</span>
+                                    <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="vehicle.placa" name="placa" id="placa" >
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="soat">SOAT</label>
+                                    <span class="text-danger">*</span>
+                                    <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="vehicle.soat" name="soat" id="soat" >
+                                </div>
+                            </div>
+                        </div>
+                          <div class="row">
+                            <div class="col-6">
+                              <div class="form-group">
+                                  <label for="exampleInputEmail1">Póliza</label>
+                                  <span class="text-danger">*</span>
+                                  <input [readonly]="!edit_state" required type="text" [(ngModel)]="vehicle.poliza" name="poliza" class="form-control" id="exampleInputEmail1" >
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="form-group">
+                                <label for="procedencia">Procedencia</label>
+                                <select [disabled]="!edit_state" name="procedencia" id="procedencia" class="form-control" [(ngModel)]="vehicle.procedencia">
+                                  <option value="" disabled>Elija una opción</option>
+                                  <option *ngFor="let item of paisList" [value]="item">{{item}}</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-6">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Chasis</label>
+                                  <span class="text-danger">*</span>
+                                  <input required [readonly]="!edit_state" type="text" class="form-control" [(ngModel)]="vehicle.chasis" name="chasis"  id="" >
+                              </div>
+                              </div>
+                              <div class="col-6">
+                                <div class="form-group">
+                                  <label for="color">Color</label>
+                                  <span class="text-danger">*</span>
+                                  <select required [disabled]="!edit_state" name="color" id="color" class="form-control" [(ngModel)]="vehicle.color">
+                                    <option value="" disabled>Elija una opción</option>
+                                    <option *ngFor="let item of colorsList" [value]="item">{{item}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-6">
+                              <div class="form-group">
+                                <label for="tipo">Tipo de Servicio</label>
+                                <span class="text-danger">*</span>
+                                <select required [disabled]="!edit_state" name="tipo" id="tipo" class="form-control" [(ngModel)]="vehicle.tipo">
+                                  <option value="" disabled>Elija una opciòn</option>
+                                  <option *ngFor="let item of tservicesList" [value]="item">{{item}}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="form-group">
+                                  <label for="cilindrada">Cilindrada</label>
+                                  <input type="number" [readonly]="!edit_state" [(ngModel)]="vehicle.cilindrada" name="cilindrada" class="form-control" id="cilindrada">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="itv">Inspección Técnica Vehicular</label>
+                                    <span class="text-danger">*</span>
+                                    <input required [readonly]="!edit_state" type="text" class="form-control" [(ngModel)]="vehicle.itv" name="itv" id="itv" >
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="anh">Autorización ANH</label><span class="text-danger">*</span>
+                                    <input required [readonly]="!edit_state" type="text" class="form-control" [(ngModel)]="vehicle.anh" name="anh" id="anh" >
+                                </div>
+                            </div>
+                        </div>
+                        
+                </mat-card-content> 
+            </mat-card>
+          </div>
+          <div class="col-12 col-md-6 col-lg-6">
+            <mat-card>
+                <div class="row px-2 d-flex justify-content-between">
+                    <mat-card-header>
+                        <mat-card-title> Imagen </mat-card-title>
+                        <mat-card-subtitle>
+                            Información Adicional
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                        
+                        <div>
+                            <button matTooltip="Búsqueda" type="button"  (click)="openDialogVehicleList()" mat-mini-fab aria-label="Búsqueda" color="secondary" class="mx-1">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                              <button matTooltip="Editar" *ngIf="edit_state == false && !!id" (click)="edit_state = true" mat-mini-fab aria-label="Editar" color="secondary">
+                                <mat-icon>edit</mat-icon>
+                              </button>
+                              <button matTooltip="Cancelar" *ngIf="edit_state == true && !!id" (click)="edit_state = false" mat-mini-fab aria-label="Cancelar" color="secondary">
+                                <mat-icon>close</mat-icon>
+                              </button>
+                        </div>
+                </div>
+                <hr>
+
+                <mat-card-content>
+                    <div class="row d-flex justify-content-center">
+                        <div class="d-flex" style="flex-direction:column;">
+                        <img [src]="vehicle.img" class="w-200">
+                        <input type="file" [readonly]="!edit_state" class="my-2" (change)="onFileChange($event)">
+                        </div>
+                      </div>
+      
+                      <div class="row mt-2">
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="marca">Marca</label>
+                            <span class="text-danger">*</span>
+                            <input required [readonly]="!edit_state" type="text" class="form-control" [(ngModel)]="vehicle.marca" name="marca" id="marca" >
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="modelo">Modelo</label>
+                            <span class="text-danger">*</span>
+                            <input required [readonly]="!edit_state" type="text" class="form-control" [(ngModel)]="vehicle.modelo" name="modelo" id="modelo">
+                          </div>
+                        </div>
+                    </div> 
+                    <div class="row my-1">
+                      <div class="col-9">
+                          <label for="modelo">Propietario</label>
+                          <input type="text" readonly class="form-control" [(ngModel)]="vehicle.propietario" name="propietario" id="propietario">
+                      </div>
+                      <div class="col-3 mt-4">
+                        <button mat-mini-fab color="primary" class="mx-1" type="button" matTooltip="Buscar Propietario" (click)="openDialogOwner()">
+                          <mat-icon>search</mat-icon>
+                        </button>
+                        <button mat-mini-fab color="primary" class="mx-1" type="button" matTooltip="Crear Propietario" (click)="openDialogCreateOwner()">
+                          <mat-icon>add</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                </mat-card-content>
+
+            </mat-card>
+          </div>  
+        </div>
+        <div *ngIf="edit_state == true" class="d-flex justify-content-center mt-3">
+            <button mat-raised-button [disabled]="f.invalid" color="primary"> 
+              <mat-icon class="pr-3">save</mat-icon>
+              GUARDAR 
+            </button>
+          </div>
+      </form>
+</mat-card>

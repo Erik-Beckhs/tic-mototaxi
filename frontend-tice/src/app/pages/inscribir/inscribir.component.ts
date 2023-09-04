@@ -45,6 +45,7 @@ export class InscribirComponent implements OnInit {
   driver:any={
     codigo:''
   };
+  
   vehicle:any;
 
   conductores:any[]=[];
@@ -201,7 +202,7 @@ export class InscribirComponent implements OnInit {
   }
 
   loadVehiculos(){
-    this._vehiculo.getVehiculos().subscribe((res:any)=>{
+    this._vehiculo.getVehiculos(1).subscribe((res:any)=>{
       this.vehiculos = res;
       //console.log(this.vehiculos);
     });
@@ -381,7 +382,7 @@ export class InscribirComponent implements OnInit {
 
   async registrar(){
     if(this.idConductor){
-      this._conductor.modificaConductor(this.driver, this.idConductor).subscribe(()=>{
+      this._conductor.update(this.idConductor, this.driver).subscribe(()=>{
         this._vehiculo.modificaVehiculo(this.vehicle, this.idVehiculo).subscribe(()=>{
           swal('Dirección Departamental de Tránsito', 'Se modificó su información de manera correcta', 'success');
           this.registrado = true;
@@ -394,7 +395,7 @@ export class InscribirComponent implements OnInit {
       // const a = await this.generaCodigoConductor();
       // const b = await this.generaCodigoVehiculo();
 
-      this._conductor.registraConductor(this.driver).subscribe((data:any)=>
+      this._conductor.save(this.driver).subscribe((data:any)=>
         {
         console.log('Se registró al conductor');
   
@@ -501,7 +502,7 @@ export class InscribirComponent implements OnInit {
 
   async generaCodigoConductor(){
     try{
-      this._conductor.lastID().subscribe((data:any)=>{
+      this._conductor.getLastID().subscribe((data:any)=>{
         let val = parseInt(data.id) + 1;
         let codigo = ('00' + val).slice(-3);
         console.log('codigo generado')

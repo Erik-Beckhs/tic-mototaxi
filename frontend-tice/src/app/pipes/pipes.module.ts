@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { EmptyImgPipe } from './empty-img.pipe';
-//import { UeducativasPipe } from './ueducativas.pipe';
 import { AsociacionPipe } from './asociacion.pipe';
+import { DateCustomPipe } from './date-custom.pipe';
 
 @NgModule({
   declarations: [
     EmptyImgPipe,
-    //UeducativasPipe,
+    DateCustomPipe,
     AsociacionPipe
   ],
   imports: [
@@ -14,7 +14,7 @@ import { AsociacionPipe } from './asociacion.pipe';
   ],
   exports:[
     EmptyImgPipe,
-    //UeducativasPipe,
+    DateCustomPipe,
     AsociacionPipe
   ]
 })

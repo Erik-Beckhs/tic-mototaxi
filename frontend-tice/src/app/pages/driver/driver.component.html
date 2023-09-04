@@ -1,0 +1,33 @@
+<mat-card class="fadeIn animated px-4 py-3">
+    <div class="py-2">
+      <div>
+        <mat-card-title class="text-center my-2">
+          REGISTRO DE CONDUCTOR
+        </mat-card-title>
+        <mat-card-title class="text-center my-2" *ngIf="id != 0">
+            {{driver.nombres}} {{driver.apellidos}}
+        </mat-card-title>
+        <mat-card-subtitle class="text-center my-2" *ngIf="id != 0">
+          Cedula: {{driver.ci}} {{driver.expedicion}} - Codigo: {{driver.codigo}}
+        </mat-card-subtitle>
+      </div>
+    </div>
+    <mat-tab-group  animationDuration="200ms">
+      <mat-tab label="DATOS GENERALES">
+        <app-form-driver [id]="id" (create)="asignaId($event)" class="pt-5">
+        </app-form-driver>
+      </mat-tab>
+      <mat-tab label="VEHÍCULO" [disabled]="id == 0">
+        <app-form-vehicle (update)="reload()" [parentId]="id">
+        </app-form-vehicle>
+      </mat-tab>
+      <mat-tab label="ANTECEDENTES" [disabled]="id == 0">
+        <app-table-antecedentes [id]="id">
+        </app-table-antecedentes>
+      </mat-tab>
+      <mat-tab label="TARJETAS TIC" [disabled]="id == 0">
+        <app-table-cards [id]="id">
+        </app-table-cards>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>

@@ -1,0 +1,28 @@
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  table th{
+    background-color: #3f51b5;
+    color:aliceblue;
+    font-size: 1rem;
+    text-align: center;
+    max-width:15%;
+  }
+
+  table td{
+    text-align: center;
+  }
+
+  th.mat-header-cell.cdk-header-cell.cdk-column-sindicato.mat-column-sindicato.ng-star-inserted, th.mat-header-cell.cdk-header-cell.cdk-column-ueducativa.mat-column-ueducativa.ng-star-inserted {
+    width: 17%;
+  }
+
+  mat-card{
+    margin:1rem;
+  }

@@ -1,0 +1,13 @@
+
+hr{
+    margin:7px 0;
+    background-color: #ececec;
+  }
+
+  form{
+    width:100%;
+  }
+
+  mat-card{
+    margin:1rem;
+  }

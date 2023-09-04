@@ -26,8 +26,7 @@
       "foreignKey": "id_user"
     }
   },
-  "acls": [
-  ],
+  "acls": [],
   "methods": {
     "login": {
       "accepts": [

@@ -48,10 +48,24 @@
     },
     "id_conductor": {
       "type": "number"
+    },
+    "id_propietario": {
+      "type": "number"
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "propietario": {
+      "type": "belongsTo",
+      "model": "propietario",
+      "foreignKey": "id_propietario"
+    },
+    "conductor": {
+      "type": "belongsTo",
+      "model": "conductor",
+      "foreignKey": "id_conductor"
+    }
+  },
   "acls": [],
   "methods": {}
 }

@@ -12,15 +12,6 @@
     padding-right: 8px;
   }
   
-
-  hr{
-    margin:7px 0;
-    background-color: #ececec;
-  }
-
-  form{
-    width:100%;
-  }
-  
-
- 
+.mat-tab-body-content{
+  overflow-x: hidden;
+}
