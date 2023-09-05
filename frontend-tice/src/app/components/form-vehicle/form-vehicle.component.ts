@@ -4,9 +4,10 @@ import { VehiculoService } from 'src/app/services/vehiculo.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TableOwnersComponent } from '../table-owners/table-owners.component';
 import { FormOwnerComponent } from '../form-owner/form-owner.component';
+//import { TableVehiclesComponent } from '../table-vehicles/table-vehicles.component';
+import { DialogVehicleComponent } from '../../dialogs/dialog-vehicle/dialog-vehicle.component';
 
 import swal from 'sweetalert';
-import { TableVehiclesComponent } from '../table-vehicles/table-vehicles.component';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class FormVehicleComponent implements OnInit {
   }
 
   id:number = 0;
+  aux_id:number = 0;
 
   paisList:string[]=[];
   colorsList:string[]=[];
@@ -60,7 +62,7 @@ export class FormVehicleComponent implements OnInit {
   loadVehicle(){
     this._vehicle.getVehicle(this.id).subscribe((res:any)=>{
       this.vehicle = res;
-      console.log(res);
+      //console.log(res);
     })
   }
 
@@ -68,7 +70,7 @@ export class FormVehicleComponent implements OnInit {
     this._vehicle.getVehicleByDriverId(this.parentId).subscribe((res:any)=>{
       this.vehicle = res[0];
       this.id = this.vehicle.id;
-      console.log(res);
+      // console.log(res);
     })
   }
 
@@ -83,7 +85,12 @@ export class FormVehicleComponent implements OnInit {
     }
 
     if(this.id !== 0){
+      if(this.id !== this.aux_id && this.aux_id !== 0){
+        this._vehicle.update(this.aux_id, {id_conductor:''})
+        item.id_conductor = this.id;
+      }
       this.updateVehicle(item);
+      this.edit_state = false;
     }  
     else{
       item.id_conductor = this.parentId;
@@ -93,11 +100,18 @@ export class FormVehicleComponent implements OnInit {
   }
 
   updateVehicle(body:any){
-    //editamos
+    //console.log(body);
+    this._vehicle.update(this.id, body).subscribe((res:any)=>{
+      swal('Información', 'Se actualizó el registro de manera correcta', 'success').then(()=>{
+        this.loadVehicle();
+        this.update.emit();
+      })
+    })
+    return;
   }
 
   async generateCodeVehicle(item:any){
-    console.log(item);
+    //console.log(item);
     this._vehicle.getLastId().subscribe((data:any)=>{
       let val = parseInt(data.id) + 1;
       let code = ('0000' + val).slice(-5);
@@ -109,7 +123,7 @@ export class FormVehicleComponent implements OnInit {
   }
 
   save(body:any){
-    console.log(body)
+    //console.log(body)
     this._vehicle.guardarVehiculo(body).subscribe((res:any)=>{
       this.id = res.id;
       this.update.emit();
@@ -159,7 +173,19 @@ export class FormVehicleComponent implements OnInit {
   }
 
   openDialogVehicleList(){
-    const dialogRef = this.dialog.open(TableVehiclesComponent, {
+    // const dialogRef = this.dialog.open(TableVehiclesComponent, {
+    //   width: '900px',
+    //   data: {
+    //     id:this.id,
+    //     module:'vehicle'
+    //   }
+    // });
+      if(!!this.id){
+
+      }
+      
+
+      const dialogRef = this.dialog.open(DialogVehicleComponent, {
       width: '900px',
       data: {
         id:this.id,
@@ -167,8 +193,13 @@ export class FormVehicleComponent implements OnInit {
       }
     });
     
-    dialogRef.componentInstance.dataEmitter.subscribe((data:any) => {
+    dialogRef.componentInstance.dataSend.subscribe((data:any) => {
       this.vehicle = data;
+      this.aux_id = this.id
+      this.id = data.id;
+      console.log('antiguo'+this.aux_id);
+      console.log('nuevo'+this.id);
+      //console.log(this.vehicle);
       this.edit_state = true;
     });
   }

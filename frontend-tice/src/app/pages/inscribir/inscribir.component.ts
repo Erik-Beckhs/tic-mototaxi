@@ -383,7 +383,7 @@ export class InscribirComponent implements OnInit {
   async registrar(){
     if(this.idConductor){
       this._conductor.update(this.idConductor, this.driver).subscribe(()=>{
-        this._vehiculo.modificaVehiculo(this.vehicle, this.idVehiculo).subscribe(()=>{
+        this._vehiculo.update(this.idVehiculo, this.vehicle).subscribe(()=>{
           swal('Dirección Departamental de Tránsito', 'Se modificó su información de manera correcta', 'success');
           this.registrado = true;
 

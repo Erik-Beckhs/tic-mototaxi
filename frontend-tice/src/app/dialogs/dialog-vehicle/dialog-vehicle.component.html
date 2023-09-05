@@ -1,0 +1,8 @@
+<div>
+    <div class="row d-flex justify-content-end">
+        <mat-icon class="cursor" (click)="closeDialog()">close</mat-icon>
+    </div>
+    <div>
+        <app-table-vehicles (dataEmitter)="getInfo($event)"></app-table-vehicles>
+    </div>
+</div>

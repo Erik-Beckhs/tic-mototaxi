@@ -14,10 +14,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { HttpClientModule } from '@angular/common/http';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { DialogsModule } from '../dialogs/dialogs.module';
+import { ComponentsModule } from '../components/components.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { SharedModule } from '../shared/shared.module';
-import { ComponentsModule } from '../components/components.module';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -52,6 +53,7 @@ import { DriversListComponent } from './drivers-list/drivers-list.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { OwnerComponent } from './owner/owner.component';
 import { OwnersListComponent } from './owners-list/owners-list.component';
+
 
 
 @NgModule({
@@ -122,7 +124,8 @@ import { OwnersListComponent } from './owners-list/owners-list.component';
     MatDialogModule,
     MatCheckboxModule,
     MatTooltipModule,
-    MatTabsModule
+    MatTabsModule,
+    DialogsModule
   ]
 })
 export class PagesModule { }

@@ -51,6 +51,15 @@
     },
     "id_propietario": {
       "type": "number"
+    },
+    "anh": {
+      "type": "string"
+    },
+    "soat": {
+      "type": "string"
+    },
+    "itv": {
+      "type": "string"
     }
   },
   "validations": [],

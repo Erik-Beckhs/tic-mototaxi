@@ -43,7 +43,7 @@ import { TableOwnersComponent } from './table-owners/table-owners.component';
     AntecedenteDialogComponent,
     TableVehiclesComponent,
     FormOwnerComponent,
-    TableOwnersComponent
+    TableOwnersComponent,
   ],
   exports: [
     DonaComponent,
@@ -56,8 +56,8 @@ import { TableOwnersComponent } from './table-owners/table-owners.component';
     TableCardsComponent,
     TableAntecedentesComponent,
     AntecedenteDialogComponent,
-    TableVehiclesComponent,
-    TableOwnersComponent
+    TableOwnersComponent,
+    TableVehiclesComponent
   ],
   imports: [
     CommonModule,

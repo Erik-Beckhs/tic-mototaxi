@@ -19,9 +19,9 @@ export class VehiculoService {
     return this.http.post(url, vehiculo);
   }
 
-  modificaVehiculo(vehiculo:any, idVehiculo){
-    let url = `${base_url}/vehiculos/${idVehiculo}`;
-    return this.http.patch(url, vehiculo);
+  update(id:number, item:any){
+    let url = `${base_url}/vehiculos/${id}`;
+    return this.http.patch(url, item);
   }
 
   countPlaca(placa:string){

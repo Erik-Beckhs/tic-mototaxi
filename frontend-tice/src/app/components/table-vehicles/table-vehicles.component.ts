@@ -2,11 +2,10 @@ import { Component, EventEmitter, Inject, OnInit, Optional, Output, ViewChild } 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
-import swal from 'sweetalert';
-import * as moment from 'moment';
 import { VehiculoService } from 'src/app/services/vehiculo.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+// import swal from 'sweetalert';
+// import * as moment from 'moment';
 
 @Component({
   selector: 'app-table-vehicles',
@@ -27,7 +26,9 @@ export class TableVehiclesComponent implements OnInit {
     private _vehicle:VehiculoService,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<TableVehiclesComponent>,
-  ) { }
+  ) { 
+    console.log(data);
+  }
 
   ngOnInit(): void {
     if(!!this.data.id){
@@ -81,12 +82,11 @@ export class TableVehiclesComponent implements OnInit {
 
   selectVehicle(item:any){
     this.dataEmitter.emit(item);
-    this.dialogRef.close();
+    //this.dialogRef.close();
     //console.log('el vehiculo seleccionado es:'+id)
   }
 
-  closeDialog(){
-    this.dialogRef.close();
-  }
-
+  // closeDialog(){
+  //   this.dialogRef.close();
+  // }
 }
