@@ -3,8 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  base_url: 'http://localhost:3000/api'
+  production: true,
+  base_url: 'http://localhost:3000/api',
+  base_external: 'https://services.policia.bo/v1/vehiculo'
 };
 
 /*

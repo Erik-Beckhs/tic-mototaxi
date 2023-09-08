@@ -24,29 +24,30 @@ export class TableVehiclesComponent implements OnInit {
 
   constructor(
     private _vehicle:VehiculoService,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<TableVehiclesComponent>,
+    //@Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    //public dialogRef: MatDialogRef<TableVehiclesComponent>,
   ) { 
-    console.log(data);
+    //console.log(data);
   }
 
   ngOnInit(): void {
-    if(!!this.data.id){
-      if(this.data.module == 'vehicle'){
-        //cargar vehiculos sin conductores
-        this.loadVehicles(2);
-          this.displayedColumns = ['#', 'codigo', 'placa', 'marca', 'modelo', 'color', 'propietario', 'acciones'];
+    // if(!!this.data.id){
+    //   if(this.data.module == 'vehicle'){
+    //     //cargar vehiculos sin conductores
+    //     this.loadVehicles(2);
+    //     this.displayedColumns = ['#', 'codigo', 'placa', 'marca', 'modelo', 'color', 'propietario', 'acciones'];
 
-      }
-      else if(this.data.module === 'owner'){
-        //cargar vehiculos sin propietarios
-        this.loadVehicles(3);
-          this.displayedColumns = ['#', 'codigo', 'placa', 'marca', 'modelo', 'color', 'conductor', 'acciones'];
-      }
-    }
-    else{
-      this.loadVehicles(1) //vehiculos general
-    }
+    //   }
+    //   else if(this.data.module === 'owner'){
+    //     //cargar vehiculos sin propietarios
+    //     this.loadVehicles(3);
+    //       this.displayedColumns = ['#', 'codigo', 'placa', 'marca', 'modelo', 'color', 'conductor', 'acciones'];
+    //   }
+    // }
+    // else{
+    //   this.loadVehicles(1) //vehiculos general
+    // }
+    this.loadVehicles(1) //vehiculos general
   }
 
   loadVehicles(type:number){
@@ -69,7 +70,7 @@ export class TableVehiclesComponent implements OnInit {
   }
 
   agregar(){
-
+    
   }
 
   update(item:any){

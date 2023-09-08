@@ -116,13 +116,13 @@
                     </mat-card-header>
                         
                         <div>
-                            <button matTooltip="Búsqueda" type="button"  (click)="openDialogVehicleList()" mat-mini-fab aria-label="Búsqueda" color="secondary" class="mx-1">
+                            <button matTooltip="Búsqueda desde sistema ITV" type="button"  (click)="openDialogVehicleSearch()" mat-mini-fab aria-label="Búsqueda desde sistema ITV" color="secondary" class="mx-1">
                                 <mat-icon>search</mat-icon>
                             </button>
-                              <button matTooltip="Editar" *ngIf="edit_state == false && !!id" (click)="edit_state = true" mat-mini-fab aria-label="Editar" color="secondary">
+                              <button matTooltip="Editar" *ngIf="edit_state == false && !!id" (click)="changeState(1)" mat-mini-fab aria-label="Editar" color="secondary">
                                 <mat-icon>edit</mat-icon>
                               </button>
-                              <button matTooltip="Cancelar" *ngIf="edit_state == true && !!id" (click)="edit_state = false" mat-mini-fab aria-label="Cancelar" color="secondary">
+                              <button matTooltip="Cancelar" *ngIf="edit_state == true && !!id" (click)="changeState(0)" mat-mini-fab aria-label="Cancelar" color="secondary">
                                 <mat-icon>close</mat-icon>
                               </button>
                         </div>
@@ -161,6 +161,7 @@
                             <span class="text-danger">*</span>
                           </label>
                           <input required type="text" readonly class="form-control" [(ngModel)]="vehicle.propietario" name="propietario" id="propietario">
+                          <input type="hidden" name="id_propietario" id="id_propietario">
                       </div>
                       <div class="col-3 mt-4">
                         <button mat-mini-fab color="primary" class="mx-1" type="button" matTooltip="Buscar Propietario" (click)="openDialogOwner()">
@@ -183,4 +184,5 @@
             </button>
           </div>
       </form>
+
 </mat-card>

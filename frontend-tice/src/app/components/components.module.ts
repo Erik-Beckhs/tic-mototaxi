@@ -28,6 +28,7 @@ import { AntecedenteDialogComponent } from './antecedente-dialog/antecedente-dia
 import { TableVehiclesComponent } from './table-vehicles/table-vehicles.component';
 import { FormOwnerComponent } from './form-owner/form-owner.component';
 import { TableOwnersComponent } from './table-owners/table-owners.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { TableOwnersComponent } from './table-owners/table-owners.component';
     MatTableModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule
   ]
 })
 export class ComponentsModule { }

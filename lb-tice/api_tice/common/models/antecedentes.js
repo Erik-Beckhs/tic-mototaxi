@@ -26,5 +26,6 @@ module.exports = function(Antecedentes) {
             description:"Elimina los antecedentes correspondientes a un conductor"
         }
     )
+    
 };
 

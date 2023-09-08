@@ -19,7 +19,13 @@
     "nombres": {
       "type": "string"
     },
-    "apellidos": {
+    "paterno": {
+      "type": "string"
+    },
+    "materno": {
+      "type": "string"
+    },
+    "complemento": {
       "type": "string"
     },
     "cat_licencia": {

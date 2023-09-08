@@ -27,7 +27,6 @@ export class DialogVehicleComponent implements OnInit {
   }
 
   getInfo(item:any){
-    //hacer emit
     this.dataSend.emit(item);
     this.dialogRef.close();
   }

@@ -13,14 +13,17 @@ import * as moment from 'moment';
 })
 export class FormDriverComponent implements OnInit {
   @Input() id: number;
+  @Input() vehicleId: number;
   @Output() create = new EventEmitter<number>();
 
   edit_state:boolean = true;
   conductor:DriverData={
     nombres:'',
-    apellidos:'',
+    paterno:'',
+    materno:'',
     ci:0,
     expedicion:'',
+    complemento:'',
     tipo_sangre:'',
     id_asociacion:0,
     cat_licencia:'',
@@ -32,6 +35,7 @@ export class FormDriverComponent implements OnInit {
     licencia:'',
     fecha_registro:moment(new Date()).format('DD/MM/YYYY')
   };
+  conductor_aux:any;
 
   expedicionesList:any;
   tiposangreList:any;
@@ -87,9 +91,11 @@ export class FormDriverComponent implements OnInit {
   update(item:any){
     this._driver.update(this.id, item).subscribe((res:any)=>{
       this.id = res.id;
+      this.create.emit(this.id);
       this.loadDriver();
       swal('Información', `Se modificó el registro de manera exitosa`, 'success').then(()=>{
         this.edit_state = false;
+        
       })
     })
   }
@@ -140,6 +146,7 @@ export class FormDriverComponent implements OnInit {
   loadDriver(){
     this._driver.getConductorById(this.id).subscribe((res:any)=>{
       this.conductor = res;
+      this.conductor_aux = {...this.conductor}
       this.conductor.fecha_nac = moment(this.conductor.fecha_nac).format('YYYY-MM-DD');
       this.conductor.fecha_registro = moment(this.conductor.fecha_registro).format('DD/MM/YYYY');
       //console.log(this.conductor)
@@ -157,13 +164,30 @@ export class FormDriverComponent implements OnInit {
       this.save(item);
     })
   }
+
+  changeState(value:number){
+    if(value==0){
+      this.restart()
+      this.edit_state = false;
+      
+    }
+    else if(value == 1){
+      this.edit_state = true;
+    }
+  }
+
+  restart(){
+    this.conductor = {...this.conductor_aux}
+  }
 }
 
 
 interface DriverData {
   nombres:string,
-  apellidos:string,
+  paterno:string,
+  materno:string,
   ci:number,
+  complemento:string,
   expedicion:string,
   tipo_sangre:string,
   id_asociacion:number,
