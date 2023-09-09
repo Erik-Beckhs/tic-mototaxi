@@ -338,7 +338,7 @@ export class ListsService {
     'Otro'
   ]
 
-  generos:any[]=['Masculino', 'Femenino'];
+  generos:any[]=['MASCULINO', 'FEMENINO'];
 
   grados:any[]=[
     {value:'administrador', label:'Administrador'},

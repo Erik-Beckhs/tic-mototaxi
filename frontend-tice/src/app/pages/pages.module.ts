@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
 
 //componentes
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -125,7 +126,8 @@ import { OwnersListComponent } from './owners-list/owners-list.component';
     MatCheckboxModule,
     MatTooltipModule,
     MatTabsModule,
-    DialogsModule
+    DialogsModule,
+    MatChipsModule
   ]
 })
 export class PagesModule { }

@@ -14,7 +14,7 @@
       "type": "string"
     },
     "ci": {
-      "type": "number"
+      "type": "string"
     },
     "nombres": {
       "type": "string"
@@ -38,7 +38,7 @@
       "type": "string"
     },
     "fecha_nac": {
-      "type": "date"
+      "type": "string"
     },
     "tipo_sangre": {
       "type": "string"
@@ -50,7 +50,7 @@
       "type": "string"
     },
     "genero": {
-      "type": "number"
+      "type": "string"
     },
     "fecha_registro": {
       "type": "date"

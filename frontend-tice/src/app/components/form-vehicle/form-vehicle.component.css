@@ -10,3 +10,16 @@ hr{
   mat-card{
     margin:1rem;
   }
+
+  .img-soat{
+    width:100px;
+  }
+  .custom-color-chip{
+    padding:3px 5px;
+    background-color: rgb(144, 253, 168);
+    color:white
+  }
+
+  .w-150{
+    width:150px;
+  }

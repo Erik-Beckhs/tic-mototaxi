@@ -90,7 +90,7 @@ export class VehiculoService {
   }
 
   getVehicleByPlaca(placa:string){
-    let url = `${base_url}/vehiculos?filter[where][placa]=${placa}`;
+    let url = `${base_url}/vehiculos?filter[include]=conductor&filter[where][placa]=${placa}`;
     return this.http.get(url);
   }
 }

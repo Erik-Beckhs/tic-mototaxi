@@ -1,8 +1,15 @@
 <mat-card>
   <mat-card-header>
-    <button *ngIf="id == 0" mat-raised-button (click)="'se abre el dialog'">BÚSQUEDA POR CI</button>
+    <button *ngIf="id == 0" mat-raised-button (click)="openDialog()">
+      <mat-icon>search</mat-icon>
+      <span class="mx-1">BÚSQUEDA POR CI</span>
+    </button>
+    <button *ngIf="id != 0" mat-raised-button (click)="refreshSEGIP()">
+      <mat-icon>refresh</mat-icon>
+      <span class="mx-1">ACTUALIZACIÓN DESDE SEGIP</span>
+    </button>
   </mat-card-header>
-    <mat-card-content>
+    <mat-card-content *ngIf="!loading">
       <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f.value)">
         <div class="fadeIn animated row">
             <div class="col-12 col-md-6 col-lg-6">
@@ -25,21 +32,20 @@
                     <div class="form-group">
                         <label for="nombres">Nombres</label>
                         <span class="text-danger">*</span>
-                        <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.nombres" name="nombres"  id="nombres">
+                        <input readonly type="text" class="form-control" [(ngModel)]="conductor.nombres" name="nombres"  id="nombres">
                     </div>
                     <div class="row">
                       <div class="col-6">
                         <div class="form-group">
                           <label for="paterno">Apellido Paterno</label>
                           <span class="text-danger">*</span>
-                          <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.paterno" name="paterno"  id="paterno">
+                          <input readonly type="text" class="form-control" [(ngModel)]="conductor.paterno" name="paterno"  id="paterno">
                       </div>
                       </div>
                       <div class="col-6">
                         <div class="form-group">
                           <label for="materno">Apellido Materno</label>
-                          <span class="text-danger">*</span>
-                          <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.materno" name="materno"  id="materno">
+                          <input readonly type="text" class="form-control" [(ngModel)]="conductor.materno" name="materno"  id="materno">
                       </div>
                       </div>
                     </div>
@@ -48,18 +54,19 @@
                         <div class="form-group">
                           <label for="ci">Documento de Identidad</label>
                           <span class="text-danger">*</span>
-                          <input [readonly]="!edit_state" required type="number" [(ngModel)]="conductor.ci" name ="ci" class="form-control" id="ci" >
+                          <input readonly required type="text" [(ngModel)]="conductor.ci" name ="ci" class="form-control" id="ci" >
                         </div>
                       </div>
                       <div class="col-2">
                         <div class="form-group" style="margin-top:1.7rem;">
-                          <input [readonly]="!edit_state" type="text" matTooltip="Complemento" [(ngModel)]="conductor.complemento" name ="complemento" class="form-control" id="complemento" >
+                          <input readonly type="text" matTooltip="Complemento" [(ngModel)]="conductor.complemento" name ="complemento" class="form-control" id="complemento" >
                         </div>
                       </div>
                       <div class="col-5">
                         <div class="form-group">
                           <label for="expedicion">Lugar de Expedición</label>
                           <span class="text-danger">*</span>
+                          <!-- <input readonly type="text" [(ngModel)]="conductor.expedicion" name ="expedicion" class="form-control" id="expedicion">-->
                           <select [disabled]="!edit_state" required name="expedicion" id="expedicion" class="form-control" [(ngModel)]="conductor.expedicion">
                             <option value="" disabled>Elija una opción</option>
                             <option *ngFor="let item of expedicionesList" [value]="item.valor">{{item.valor}}</option>
@@ -71,19 +78,20 @@
                       <div class="col-6">
                         <div class="form-group">
                           <label for="fecha_nac">Fecha de Nacimiento</label>
-                          <span class="text-danger">*</span>
-
-                          <input [readonly]="!edit_state" required type="date" class="form-control" [value]="conductor.fecha_nac" [(ngModel)]="conductor.fecha_nac" name="fecha_nac"  id="fecha_nac">
+                          <!--<span class="text-danger">*</span>
+                          <input readonly type="date" class="form-control" [value]="conductor.fecha_nac" [(ngModel)]="conductor.fecha_nac" name="fecha_nac"  id="fecha_nac">-->
+                          <input readonly type="text" [(ngModel)]="conductor.fecha_nac" name ="fecha_nac" class="form-control" id="fecha_nac" >
                         </div>
                       </div>
                       <div class="col-12 col-md-6 col-lg-6">
                         <div class="form-group">
                           <label for="genero">Género</label>
                           <span class="text-danger">*</span>
-                          <select [disabled]="!edit_state" required name="genero" id="genero" class="form-control" [(ngModel)]="conductor.genero">
+                          <!--<select [disabled]="!edit_state" required name="genero" id="genero" class="form-control" [(ngModel)]="conductor.genero">
                             <option value="" disabled>Elija una opción</option>
                             <option *ngFor="let item of generosList" [value]="item">{{item}}</option>
-                          </select>
+                          </select>-->
+                          <input readonly type="text" [(ngModel)]="conductor.genero" name ="genero" class="form-control" id="genero" >
                         </div>
                        </div>
                     </div>
@@ -98,7 +106,7 @@
                 <div class="form-group">
                   <label for="direccion">Dirección</label>
                   <span class="text-danger">*</span>
-                  <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.direccion" name="direccion"  id="direccion">
+                  <input readonly required type="text" class="form-control" [(ngModel)]="conductor.direccion" name="direccion"  id="direccion">
                 </div>
                 </mat-card-content>
               </mat-card>
@@ -127,10 +135,9 @@
                     <div style="text-align:center;">
                         <img [src]="conductor.fotografia" alt="fotografía" class="w-200" />
                       </div>
-                      <div style="text-align:center;">
-                        <input [readonly]="!edit_state" type="file" class="my-2" (change)="onFileChange($event)">
+                      <div style="text-align:center;" *ngIf="edit_state">
+                        <input type="file" class="my-2" (change)="onFileChange($event)">
                       </div>
-
                   <div class="mt-2">
                     <div class="form-group">
                       <label for="licencia">Licencia de Conducir</label>
@@ -179,5 +186,10 @@
         </button>
         </div>
       </form>
+    </mat-card-content>
+    <mat-card-content *ngIf="loading">
+      <div class="row d-flex justify-content-center">
+        <mat-spinner></mat-spinner>
+      </div>
     </mat-card-content>
 </mat-card>
