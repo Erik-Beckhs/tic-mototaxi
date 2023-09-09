@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Optional, Output, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { PropietarioService } from '../../services/propietario.service'
 
 @Component({
   selector: 'app-table-owners',
@@ -9,6 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./table-owners.component.css']
 })
 export class TableOwnersComponent implements OnInit {
+  @Output() dataEmitter = new EventEmitter<any>();
+  
   displayedColumns: string[] = [
     '#', 
     'nombre', 
@@ -25,12 +29,15 @@ export class TableOwnersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
-  constructor() { }
+  constructor(
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    private _owner:PropietarioService
+  ) { }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.owners);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // console.log(this.data);
+
+    this.loadOwners()
   }
 
   //methods
@@ -49,5 +56,19 @@ export class TableOwnersComponent implements OnInit {
 
   delete(id:number){
 
+  }
+
+  loadOwners(){
+    this._owner.getOwners().subscribe((res:any)=>{
+      this.owners = res;
+      //console.log(res);
+      this.dataSource = new MatTableDataSource(this.owners);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    })
+  }
+
+  selectItem(item:any){
+    this.dataEmitter.emit(item);
   }
 }

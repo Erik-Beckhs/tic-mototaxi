@@ -1,1 +1,27 @@
-<p>vehicle works!</p>
+
+<mat-card class="fadeIn animated px-4 py-3">
+    <div class="py-2">
+      <div>
+        <mat-card-title class="text-center my-2">
+          REGISTRO DE VEHÍCULO
+        </mat-card-title>
+        <mat-card-title class="text-center my-2" *ngIf="id != 0">
+            Nro de Placa: {{vehicle.placa}}
+        </mat-card-title>
+        <mat-card-subtitle class="text-center my-2" *ngIf="id != 0">
+          Marca: {{vehicle.marca}} -
+          Modelo: {{vehicle.modelo}}
+        </mat-card-subtitle>
+      </div>
+    </div>
+    <mat-tab-group  animationDuration="200ms">
+      <mat-tab label="DATOS GENERALES">
+        <app-form-vehicle [id]="id" (create)="asignaId($event)" class="pt-5">
+        </app-form-vehicle>
+      </mat-tab>
+      <mat-tab label="CONDUCTOR" [disabled]="id == 0">
+        <app-form-driver (update)="reload()" [vehicleId]="id">
+        </app-form-driver>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>

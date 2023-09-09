@@ -19,9 +19,9 @@ export class VehiculoService {
     return this.http.post(url, vehiculo);
   }
 
-  modificaVehiculo(vehiculo:any, idVehiculo){
-    let url = `${base_url}/vehiculos/${idVehiculo}`;
-    return this.http.patch(url, vehiculo);
+  update(id:number, item:any){
+    let url = `${base_url}/vehiculos/${id}`;
+    return this.http.patch(url, item);
   }
 
   countPlaca(placa:string){
@@ -86,6 +86,11 @@ export class VehiculoService {
 
   getVehicleByDriverId(driverId:any){
     let url = `${base_url}/vehiculos?filter[where][id_conductor]=${driverId}`;
+    return this.http.get(url);
+  }
+
+  getVehicleByPlaca(placa:string){
+    let url = `${base_url}/vehiculos?filter[where][placa]=${placa}`;
     return this.http.get(url);
   }
 }

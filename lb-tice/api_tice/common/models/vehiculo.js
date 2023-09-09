@@ -1,3 +1,4 @@
+const axios = require('axios');
 'use strict';
 
 module.exports = function(Vehiculo) {
@@ -50,6 +51,27 @@ module.exports = function(Vehiculo) {
                 ],
                 returns: { arg: 'data', type: ['any'], root: true },
                 description : 'Devuelve la cantidad de vehiculos por tipo de servicio'
+            }
+        )
+
+        ////
+        Vehiculo.getExternalData = async (dato, cb) => {
+            const res = await axios.post('https://services.policia.bo/v1/vehiculo',dato,{
+              headers: {
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaXNzIjoiYnhBRmlzVEJzcmM5NXdLWFdJcDNISHFIQmtTOTExZ2EifQ.QwdVtQlfwIGPYnul_rHdwlJNCrIWPhtBGghWml1gYXQ`
+              }
+            });
+            return res.data;
+        }
+    
+        Vehiculo.remoteMethod(
+            'getExternalData',
+            {
+                http: { verb: 'post', path:'/getExternalData'},
+                //accepts: { arg: 'idConductor', type: 'string' },
+                accepts: [{ arg: 'dato', type: "any", http: { source: "body" } }],
+                returns: { arg: 'data', type: 'any', root: true },
+                description:"Devuelve el vehiculo desde el servicio de itv"
             }
         )
 };

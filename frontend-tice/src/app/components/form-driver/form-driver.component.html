@@ -1,5 +1,9 @@
 <mat-card>
-    <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+  <mat-card-header>
+    <button *ngIf="id == 0" mat-raised-button (click)="'se abre el dialog'">BÚSQUEDA POR CI</button>
+  </mat-card-header>
+    <mat-card-content>
+      <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f.value)">
         <div class="fadeIn animated row">
             <div class="col-12 col-md-6 col-lg-6">
               <mat-card>
@@ -23,20 +27,36 @@
                         <span class="text-danger">*</span>
                         <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.nombres" name="nombres"  id="nombres">
                     </div>
-                    <div class="form-group">
-                        <label for="apellidos">Apellidos</label>
-                        <span class="text-danger">*</span>
-                        <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.apellidos" name="apellidos"  id="apellidos">
-                    </div>
                     <div class="row">
                       <div class="col-6">
+                        <div class="form-group">
+                          <label for="paterno">Apellido Paterno</label>
+                          <span class="text-danger">*</span>
+                          <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.paterno" name="paterno"  id="paterno">
+                      </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group">
+                          <label for="materno">Apellido Materno</label>
+                          <span class="text-danger">*</span>
+                          <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.materno" name="materno"  id="materno">
+                      </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-5">
                         <div class="form-group">
                           <label for="ci">Documento de Identidad</label>
                           <span class="text-danger">*</span>
                           <input [readonly]="!edit_state" required type="number" [(ngModel)]="conductor.ci" name ="ci" class="form-control" id="ci" >
+                        </div>
                       </div>
+                      <div class="col-2">
+                        <div class="form-group" style="margin-top:1.7rem;">
+                          <input [readonly]="!edit_state" type="text" matTooltip="Complemento" [(ngModel)]="conductor.complemento" name ="complemento" class="form-control" id="complemento" >
+                        </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-5">
                         <div class="form-group">
                           <label for="expedicion">Lugar de Expedición</label>
                           <span class="text-danger">*</span>
@@ -62,7 +82,7 @@
                           <span class="text-danger">*</span>
                           <select [disabled]="!edit_state" required name="genero" id="genero" class="form-control" [(ngModel)]="conductor.genero">
                             <option value="" disabled>Elija una opción</option>
-                            <option *ngFor="let item of generosList" [value]="item.valor">{{item.name}}</option>
+                            <option *ngFor="let item of generosList" [value]="item">{{item}}</option>
                           </select>
                         </div>
                        </div>
@@ -93,10 +113,10 @@
                         </mat-card-subtitle>
                     </mat-card-header>
                     <div *ngIf="id != 0" >
-                        <button matTooltip="Editar" *ngIf="edit_state == false" (click)="edit_state = true" mat-mini-fab aria-label="Editar" color="secondary">
+                        <button matTooltip="Editar" *ngIf="edit_state == false" (click)="changeState(1)" mat-mini-fab aria-label="Editar" color="secondary">
                           <mat-icon>edit</mat-icon>
                         </button>
-                        <button matTooltip="Cancelar" *ngIf="edit_state == true" (click)="edit_state = false" mat-mini-fab aria-label="Cancelar" color="secondary">
+                        <button matTooltip="Cancelar" *ngIf="edit_state == true" (click)="changeState(0)" mat-mini-fab aria-label="Cancelar" color="secondary">
                           <mat-icon>close</mat-icon>
                         </button>
                       </div>
@@ -116,13 +136,6 @@
                       <label for="licencia">Licencia de Conducir</label>
                       <span class="text-danger">*</span>
                       <input [readonly]="!edit_state" required type="text" class="form-control" [(ngModel)]="conductor.licencia" name="licencia"  id="licencia" >
-                    </div>
-                    <div class="form-group">
-                      <label for="sindicato">Sindicato  / Asociación</label>
-                      <select [disabled]="!edit_state" class="form-control" name="id_asociacion" id="id_asociacion" [(ngModel)]="conductor.id_asociacion">
-                        <option value='' disabled>Elija una opciòn</option>
-                        <option *ngFor="let item of sindicatosList" [value]="item.id">{{item.nombre}}</option>
-                      </select>
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6">
@@ -146,6 +159,13 @@
                             </div>
                           </div>
                     </div>
+                    <div class="form-group">
+                      <label for="sindicato">Sindicato  / Asociación</label>
+                      <select [disabled]="!edit_state" class="form-control" name="id_asociacion" id="id_asociacion" [(ngModel)]="conductor.id_asociacion">
+                        <option value='' disabled>Elija una opciòn</option>
+                        <option *ngFor="let item of sindicatosList" [value]="item.id">{{item.nombre}}</option>
+                      </select>
+                    </div>
                   </div>
                 </mat-card-content>   
               </mat-card>
@@ -159,4 +179,5 @@
         </button>
         </div>
       </form>
+    </mat-card-content>
 </mat-card>

@@ -2,11 +2,10 @@ import { Component, EventEmitter, Inject, OnInit, Optional, Output, ViewChild } 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
-import swal from 'sweetalert';
-import * as moment from 'moment';
 import { VehiculoService } from 'src/app/services/vehiculo.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+// import swal from 'sweetalert';
+// import * as moment from 'moment';
 
 @Component({
   selector: 'app-table-vehicles',
@@ -25,27 +24,30 @@ export class TableVehiclesComponent implements OnInit {
 
   constructor(
     private _vehicle:VehiculoService,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<TableVehiclesComponent>,
-  ) { }
+    //@Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    //public dialogRef: MatDialogRef<TableVehiclesComponent>,
+  ) { 
+    //console.log(data);
+  }
 
   ngOnInit(): void {
-    if(!!this.data.id){
-      if(this.data.module == 'vehicle'){
-        //cargar vehiculos sin conductores
-        this.loadVehicles(2);
-          this.displayedColumns = ['#', 'codigo', 'placa', 'marca', 'modelo', 'color', 'propietario', 'acciones'];
+    // if(!!this.data.id){
+    //   if(this.data.module == 'vehicle'){
+    //     //cargar vehiculos sin conductores
+    //     this.loadVehicles(2);
+    //     this.displayedColumns = ['#', 'codigo', 'placa', 'marca', 'modelo', 'color', 'propietario', 'acciones'];
 
-      }
-      else if(this.data.module === 'owner'){
-        //cargar vehiculos sin propietarios
-        this.loadVehicles(3);
-          this.displayedColumns = ['#', 'codigo', 'placa', 'marca', 'modelo', 'color', 'conductor', 'acciones'];
-      }
-    }
-    else{
-      this.loadVehicles(1) //vehiculos general
-    }
+    //   }
+    //   else if(this.data.module === 'owner'){
+    //     //cargar vehiculos sin propietarios
+    //     this.loadVehicles(3);
+    //       this.displayedColumns = ['#', 'codigo', 'placa', 'marca', 'modelo', 'color', 'conductor', 'acciones'];
+    //   }
+    // }
+    // else{
+    //   this.loadVehicles(1) //vehiculos general
+    // }
+    this.loadVehicles(1) //vehiculos general
   }
 
   loadVehicles(type:number){
@@ -68,7 +70,7 @@ export class TableVehiclesComponent implements OnInit {
   }
 
   agregar(){
-
+    
   }
 
   update(item:any){
@@ -81,12 +83,11 @@ export class TableVehiclesComponent implements OnInit {
 
   selectVehicle(item:any){
     this.dataEmitter.emit(item);
-    this.dialogRef.close();
+    //this.dialogRef.close();
     //console.log('el vehiculo seleccionado es:'+id)
   }
 
-  closeDialog(){
-    this.dialogRef.close();
-  }
-
+  // closeDialog(){
+  //   this.dialogRef.close();
+  // }
 }
