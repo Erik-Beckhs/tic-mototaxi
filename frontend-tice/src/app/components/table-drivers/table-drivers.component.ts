@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConductorService } from '../../services/conductor.service';
 
 import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
@@ -15,19 +17,8 @@ import { MatSort } from '@angular/material/sort';
 })
 export class TableDriversComponent implements OnInit {
   @Input() id: number;
-  @Input() module:string;
 
-  displayedColumns: string[] = [
-    '#', 
-    'codigo',
-    'nombres', 
-    'ci', 
-    'sindicato', 
-    'tipo', 
-    'placa', 
-    'fecha_registro', 
-    'acciones'
-  ];
+  displayedColumns: string[] = [];
   dataSource: MatTableDataSource<any>;
   conductores:any=[];
   
@@ -39,24 +30,48 @@ export class TableDriversComponent implements OnInit {
     public dialog: MatDialog,
     public _conductor:ConductorService,
   ) { 
-   
+
   }
 
   ngOnInit(): void {
     if(this.id){
       //devuelve a los conductores del sindicato
-      this.loadDrivers(this.id);
+      this.loadDrivers();
+      this.displayedColumns= [
+        '#', 
+        'codigo',
+        'nombres', 
+        'ci', 
+        'tipo', 
+        'placa', 
+        'fecha_registro', 
+        'acciones'
+      ];
     }
-    if(!!this.module && this.module == 'general'){
-      this.loadDriversGral()
+    else{
+      this.loadDriversGral();
+      this.displayedColumns= [
+        '#', 
+        'codigo',
+        'nombres', 
+        'ci', 
+        'tipo', 
+        'placa',
+        'sindicato', 
+        'fecha_registro', 
+        'acciones'
+      ];
     }
+    // if(!!this.module && this.module == 'general'){
+    //   this.loadDriversGral()
+    // }
     //this.loadConductores();
   }
 
   //methods
 
-  loadDrivers(id:number){
-    this._conductor.getDriversByIdUnion(id).subscribe((res:any)=>{
+  loadDrivers(){
+    this._conductor.getDriversByIdUnion(this.id).subscribe((res:any)=>{
       this.conductores = res;
 
       this.conductores.forEach((element:any) => {
@@ -126,14 +141,35 @@ export class TableDriversComponent implements OnInit {
       if(respuesta){
         //TODO eliminar lista de antecedentes dado el id de conductor
         this._conductor.deleteConductor(idCond).subscribe(()=>{
-          swal('Dirección Nacional de Tránsito', 'Se eliminó al conductor de manera correcta', 'success').then(()=>{
+          Swal.fire('Información', 'Se eliminó al conductor de manera correcta', 'success').then(()=>{
             this.loadDriversGral();
           })
         })
       }
       //console.log('no eliminar solo cerrar modal');
     })
+  }
 
+  remove(id:number){
+    Swal.fire({
+      title: "Información",
+      text: `Esta seguro de retirar al conductor de la asociación`,
+      icon: "warning",
+      showCancelButton: true, //
+      confirmButtonColor: "#3085d6", // 
+      cancelButtonColor: "#d33", // 
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._conductor.update(id, {id_asociacion:null}).subscribe((res:any)=>{
+          Swal.fire('Información', 'Se retiró al conductor de la asociación', 'success');
+          this.loadDrivers();
+        })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return;
+      }
+    });
   }
 
   // loadConductores(){

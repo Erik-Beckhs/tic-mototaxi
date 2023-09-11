@@ -49,6 +49,43 @@ export class ExternalService {
     }
   ]
 
+  soat:any = [
+    {
+      placa:'1', //esta propiedad solo es para pruebas
+      CodigoRetorno:0,
+      Exito:true,
+      Mensaje:'Los datos..',
+      oSDatos:{
+        SoatFechaCoberturaFin:'2023-12-31T00::00:00',
+        SoatFechaCoberturaInicio:'2023-01-01T00::00:00',
+        SoatTParVehiculoUsoDescripcion:'PARTICULAR'
+      }
+    },
+    {
+      placa:'1716ZFP', //esta propiedad solo es para pruebas
+      CodigoRetorno:0,
+      Exito:true,
+      Mensaje:'Los datos..',
+      oSDatos:{
+        SoatFechaCoberturaFin:'2023-12-31T00::00:00',
+        SoatFechaCoberturaInicio:'2023-01-01T00::00:00',
+        SoatTParVehiculoUsoDescripcion:'PARTICULAR'
+      }
+    },
+    {
+      placa:'2', //esta propiedad solo es para pruebas
+      CodigoRetorno:0,
+      Exito:true,
+      Mensaje:'Los datos..',
+      oSDatos:{
+        SoatFechaCoberturaFin:'2022-12-31T00::00:00',
+        SoatFechaCoberturaInicio:'2022-01-01T00::00:00',
+        SoatTParVehiculoUsoDescripcion:'PARTICULAR'
+      }
+    }
+
+  ]
+
   constructor(private http:HttpClient) { 
 
   }
@@ -63,7 +100,7 @@ export class ExternalService {
   //   return this.http.post(url, {dato:placa});
   // }
 
-  getDriver(cedula:number){
+  getDriverExternal(cedula:number){
     //console.log(cedula);
     const response = this.drivers.find((element:any) => (element.NumeroDocumento == cedula));
     return response;
@@ -74,8 +111,9 @@ export class ExternalService {
     return this.http.post(url, {dato:placa});
   }
 
-  getSOAT(){
-    
+  getSOAT(placa:any){
+    const response = this.soat.find((element:any) => (element.placa == placa));
+    return response;
   }
 }
 

@@ -23,13 +23,6 @@ table {
     width: 17%;
   }
 
-  .rounded-image {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    object-fit: cover; 
-  }
-
   mat-card{
     margin:1rem;
   }

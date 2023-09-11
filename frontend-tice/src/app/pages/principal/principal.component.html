@@ -1,99 +1,141 @@
-<div class="card principal">
-    <a [routerLink]="['inscribir/0']">
-        <mat-card class="example-card bg-success">
-            <div class="row">
-                <div class="col-4 p-2 icono-card">
-                    <i class="fa fa-user fa-5x text-white"></i>
-                </div>
-                <div class="col-8 p-2 content-card">
-                    <mat-card-title class="text-white">Nuevo Conductor</mat-card-title>
-                    <mat-card-subtitle class="text-white">Permite registrar la información de conductores, sus vehiculos, ademas de generar la tarjeta TICE para la presente gestión.</mat-card-subtitle>
-                </div>
-            </div>
-        </mat-card>    
-    </a>
-
-    <a [routerLink]="['consultar']">
-        <mat-card class="example-card bg-info">
-            <div class="row">
-                <div class="col-4 p-2 icono-card">
-                    <i class="fa fa-users fa-5x text-white"></i>
-                </div>
-                <div class="col-8 p-2 content-card">
-                    <mat-card-title class="text-white">Lista de Conductores</mat-card-title>
-                    <mat-card-subtitle class="text-white">Permite realizar busquedas, modificar y eliminar conductores, ademas de descargar e imprimir el reporte de los mismos.</mat-card-subtitle>
-                </div>
-            </div>
-        </mat-card>
-    </a>
-
-    <a [routerLink]="['consultar']">
-        <mat-card class="example-card bg-warning">
-            <div class="row">
-                <div class="col-4 p-2 icono-card">
-                    <i class="fa fa-search fa-5x text-white"></i>
-                </div>
-                <div class="col-8  p-2">
-                    <mat-card-title class="text-white">Busqueda</mat-card-title>
-                    <mat-card-subtitle class="text-white">Permite buscar información de conductores por nombre, cédula, sindicato, placa y tipo de movilidad.</mat-card-subtitle>
-                </div>
-            </div>
-        </mat-card>
-    </a>
-
-    <a [routerLink]="['asociacion/0']">
-        <mat-card class="example-card bg-dark">
-            <div class="row">
-                <div class="col-4 p-2 icono-card">
-                    <i class="fa fa-car fa-5x text-white"></i>
-                </div>
-                <div class="col-8 p-2 content-card">
-                    <mat-card-title class="text-white">Nueva Asociación</mat-card-title>
-                    <mat-card-subtitle class="text-white">Permite registrar la información de asociaciones, su representante, dirección, ciudad e imagen</mat-card-subtitle>
-                </div>
-            </div>
-        </mat-card>
-    </a>
-
-    <a [routerLink]="['inscribir/0']">
-        <mat-card class="example-card bg-success">
-            <div class="row">
-                <div class="col-4 p-2 icono-card">
-                    <i class="fa fa fa-address-card-o fa-5x text-white"></i>
-                </div>
-                <div class="col-8  p-2">
-                    <mat-card-title class="text-white">Tarjeta TICE</mat-card-title>
-                    <mat-card-subtitle class="text-white">La generación de la tarjeta TICE es la funcion principal del sistema, lleva consigo información del conductor, del vehiculo y su validez.</mat-card-subtitle>
-                </div>
-            </div>
-        </mat-card>
-    </a>
-
-    <a [routerLink]="['sindicatos']">
-        <mat-card class="example-card bg-info">
-            <div class="row">
-                <div class="col-4 p-2 icono-card">
-                    <i class="fa fa-list-ol fa-5x text-white"></i>
-                </div>
-                <div class="col-8 p-2 content-card">
-                    <mat-card-title class="text-white">Lista de Asociaciones</mat-card-title>
-                    <mat-card-subtitle class="text-white">Permite realizar busquedas, modificar y eliminar asociaciones, ademas de descargar e imprimir el reporte de los mismos.</mat-card-subtitle>
-                </div>
-            </div>
-        </mat-card>
-    </a>
-
-    <a [routerLink]="['estadisticas']">
-        <mat-card class="example-card bg-dark">
-            <div class="row">
-                <div class="col-4 p-2 icono-card">
-                    <i class="fa fa-bar-chart-o fa-5x text-white"></i>
-                </div>
-                <div class="col-8  p-2">
-                    <mat-card-title class="text-white">Reportes Estadísticos</mat-card-title>
-                    <mat-card-subtitle class="text-white">Muestra reportes gráficos referidos a cantidades de tarjetas generadas por mes, por gestion, cantidad de conductores por asociaci6n, entre otros.</mat-card-subtitle>
-                </div>
-            </div>
-        </mat-card>
-    </a>
-</div>
+<mat-card class="mx-5">
+    <mat-card-content>
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <a [routerLink]="['inscribir/0']">
+                <mat-card class="example-card bg-success">
+                    <div class="row">
+                        <div class="col-4 p-2 icono-card">
+                            <img class="img-flat" src="../../../assets/images/flaticon/sitio-web.png" alt="">
+                        </div>
+                        <div class="col-8 p-2 content-card">
+                            <mat-card-title class="text-white">FILIACIÓN</mat-card-title>
+                            <mat-card-subtitle class="text-white">Registre y gestione conductores, su vehiculo y tarjeta TIC</mat-card-subtitle>
+                        </div>
+                    </div>
+                </mat-card>    
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <a [routerLink]="['consultar']">
+                <mat-card class="example-card bg-warning">
+                    <div class="row">
+                        <div class="col-4 p-2 icono-card">
+                            <img class="img-flat" src="../../../assets/images/flaticon/conexion.png" alt="">
+                        </div>
+                        <div class="col-8 p-2 content-card">
+                            <mat-card-title class="text-white">SINDICATOS</mat-card-title>
+                            <mat-card-subtitle class="text-white">Gestione sindicatos y asociaciones para la filiación de conductores</mat-card-subtitle>
+                        </div>
+                    </div>
+                </mat-card>
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <a [routerLink]="['estadisticas']">
+                <mat-card class="example-card bg-danger">
+                    <div class="row">
+                        <div class="col-4 p-2 icono-card">
+                            <img class="img-flat" src="../../../assets/images/flaticon/motocicleta.png" alt="">
+                        </div>
+                        <div class="col-8  p-2">
+                            <mat-card-title class="text-white">VEHICULOS</mat-card-title>
+                            <mat-card-subtitle class="text-white">Encuentre de manera sencilla la informacion de su vehículo, SOAT, ITV, entre otros</mat-card-subtitle>
+                        </div>
+                    </div>
+                </mat-card>
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <a [routerLink]="['sindicatos']">
+                <mat-card class="example-card bg-danger">
+                    <div class="row">
+                        <div class="col-4 p-2 icono-card">
+                            <img class="img-flat" src="../../../assets/images/flaticon/conductor.png" alt="">
+                        </div>
+                        <div class="col-8 p-2 content-card">
+                            <mat-card-title class="text-white">CONDUCTORES</mat-card-title>
+                            <mat-card-subtitle class="text-white">Gestione la información de los conductores, su vehiculo, sus antecedentes y tarjeta TIC</mat-card-subtitle>
+                        </div>
+                    </div>
+                </mat-card>
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <a [routerLink]="['consultar']">
+                <mat-card class="example-card bg-success">
+                    <div class="row">
+                        <div class="col-4 p-2 icono-card">
+                            <img class="img-flat" src="../../../assets/images/flaticon/beneficios.png" alt="">
+                        </div>
+                        <div class="col-8  p-2">
+                            <mat-card-title class="text-white">ESTADÍSTICAS</mat-card-title>
+                            <mat-card-subtitle class="text-white">Visualice los reportes gráficos generados por el sistema</mat-card-subtitle>
+                        </div>
+                    </div>
+                </mat-card>
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <a [routerLink]="['inscribir/0']">
+                <mat-card class="example-card bg-warning">
+                    <div class="row">
+                        <div class="col-4 p-2 icono-card">
+                            <img class="img-flat" src="../../../assets/images/flaticon/informacion-personal.png" alt="">
+                        </div>
+                        <div class="col-8  p-2">
+                            <mat-card-title class="text-white">ROLES Y PERMISOS</mat-card-title>
+                            <mat-card-subtitle class="text-white">Administre los roles y permisos de los usuarios del sistema</mat-card-subtitle>
+                        </div>
+                    </div>
+                </mat-card>
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <a [routerLink]="['asociacion/0']">
+                <mat-card class="example-card bg-warning">
+                    <div class="row">
+                        <div class="col-4 p-2 icono-card">
+                            <img class="img-flat" src="../../../assets/images/flaticon/cv.png" alt="">
+                        </div>
+                        <div class="col-8 p-2 content-card">
+                            <mat-card-title class="text-white">MI INFORMACIÓN</mat-card-title>
+                            <mat-card-subtitle class="text-white">Gestione su informacion personal</mat-card-subtitle>
+                        </div>
+                    </div>
+                </mat-card>
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <a [routerLink]="['estadisticas']">
+                <mat-card class="example-card bg-danger">
+                    <div class="row">
+                        <div class="col-4 p-2 icono-card">
+                            <img class="img-flat" src="../../../assets/images/flaticon/tema.png" alt="">
+                        </div>
+                        <div class="col-8  p-2">
+                            <mat-card-title class="text-white">TEMAS</mat-card-title>
+                            <mat-card-subtitle class="text-white">Personalice el tema de su elección</mat-card-subtitle>
+                        </div>
+                    </div>
+                </mat-card>
+            </a>
+        </div>   
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <a [routerLink]="['estadisticas']">
+                <mat-card class="example-card bg-success">
+                    <div class="row">
+                        <div class="col-4 p-2 icono-card">
+                            <img class="img-flat" src="../../../assets/images/flaticon/intimidad.png" alt="">
+                        </div>
+                        <div class="col-8  p-2">
+                            <mat-card-title class="text-white">CONTRASEÑA</mat-card-title>
+                            <mat-card-subtitle class="text-white">Actualice su contraseña de manera periódica</mat-card-subtitle>
+                        </div>
+                    </div>
+                </mat-card>
+            </a>
+        </div>
+    </div>
+    </mat-card-content>
+</mat-card>

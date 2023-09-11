@@ -4,13 +4,14 @@ import { VehiculoService } from 'src/app/services/vehiculo.service';
 import { ExternalService } from 'src/app/services/external.service';
 import { MatDialog } from '@angular/material/dialog';
 //import { TableOwnersComponent } from '../table-owners/table-owners.component';
-import { FormOwnerComponent } from '../form-owner/form-owner.component';
+//import { FormOwnerComponent } from '../form-owner/form-owner.component';
 //import { TableVehiclesComponent } from '../table-vehicles/table-vehicles.component';
 //import { DialogVehicleComponent } from '../../dialogs/dialog-vehicle/dialog-vehicle.component';
-import { DialogListOwnerComponent } from 'src/app/dialogs/dialog-list-owner/dialog-list-owner.component';
+//import { DialogListOwnerComponent } from 'src/app/dialogs/dialog-list-owner/dialog-list-owner.component';
 import { DialogSearchComponent } from 'src/app/dialogs/dialog-search/dialog-search.component';
-import swal from 'sweetalert';
-import Swal from 'sweetalert2'
+//import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+import moment from 'moment';
 
 @Component({
   selector: 'app-form-vehicle',
@@ -22,7 +23,8 @@ export class FormVehicleComponent implements OnInit {
   //@Input() id: number;
   @Output() update = new EventEmitter<any>();
   
-  vehicle:any={
+  vehicle:VehicleData={
+    id:0,
     placa:'',
     industria:'',
     marca:'',
@@ -36,11 +38,12 @@ export class FormVehicleComponent implements OnInit {
     itv:'',
     tipo:'',
     img:'',
-    soat:'',
+    soat:0,
     fecha_inicio_soat:'',
     fecha_fin_soat:'',
     propietario:'',
     ci_propietario:'',
+    img_propietario:''
   }
 
   vehicle_aux:any;
@@ -54,6 +57,7 @@ export class FormVehicleComponent implements OnInit {
   paisList:string[]=[];
   colorsList:string[]=[];
   tservicesList:string[]=[];
+  departamentosList:any[] = [];
   edit_state:boolean=false;
   file:any;
   imageLoad:boolean=true;
@@ -68,6 +72,7 @@ export class FormVehicleComponent implements OnInit {
     this.paisList = this._list.pais.sort();
     this.colorsList = this._list.colores;
     this.tservicesList=this._list.tservicios; 
+    this.departamentosList = this._list.departamentos;
   }
 
   ngOnInit(): void {
@@ -95,6 +100,7 @@ export class FormVehicleComponent implements OnInit {
         this.vehicle = res[0];
         this.vehicle_aux = {...this.vehicle}
         this.id = this.vehicle.id;
+        this.data_soat(this.vehicle.fecha_inicio_soat, this.vehicle.fecha_fin_soat);
       }
     })
   }
@@ -105,30 +111,43 @@ export class FormVehicleComponent implements OnInit {
       item.img = this.imageTemp;
     }
     item.img_propietario = this.vehicle.img_propietario;
+    item.soat = this.vehicle.soat;
+    item.fecha_inicio_soat = this.vehicle.fecha_inicio_soat;
+    item.fecha_fin_soat = this.vehicle.fecha_fin_soat;
     // if(!item.img){
     //   swal('Información', 'Debe cargar una imagen', 'error');
     //   return;
     // }
 
-    if(this.id !== 0){
-      if(this.id !== this.aux_id && this.aux_id !== 0){
-        this._vehicle.update(this.aux_id, {id_conductor:''})
-        item.id_conductor = this.id;
-      }
-      this.updateVehicle(item);
-      this.edit_state = false;
-    }  
-    else{
-      item.id_conductor = this.parentId;
-      this.generateCodeVehicle(item); 
-    }
+    const current_year = new Date().getFullYear();
 
+    // if(this.vehicle.itv.substring(0,4) == current_year  && this.vigency == 1){ //validacion de itv y soat
+    if(this.vigency == 1){ //reemplazar por este
+      if(this.id !== 0){
+        //editar
+        if(this.id !== this.aux_id && this.aux_id !== 0){
+          this._vehicle.update(this.aux_id, {id_conductor:''})
+          item.id_conductor = this.id;
+        }
+        this.updateVehicle(item);
+        this.edit_state = false;
+      }  
+      else{
+        //crear
+        item.id_conductor = this.parentId;
+        this.generateCodeVehicle(item); 
+      }
+      this.edit_state = false;
+    }   
+    else{
+      Swal.fire("Información", "No se puede registrar debido a que los valores de ITV o SOAT no se encuentran vigentes", "error");
+    }
   }
 
   updateVehicle(body:any){
     //console.log(body);
     this._vehicle.update(this.id, body).subscribe((res:any)=>{
-      swal('Información', 'Se actualizó el registro de manera correcta', 'success').then(()=>{
+      Swal.fire('Información', 'Se actualizó el registro de manera correcta', 'success').then(()=>{
         this.loadVehicle();
         this.update.emit();
       })
@@ -149,12 +168,11 @@ export class FormVehicleComponent implements OnInit {
   }
 
   save(body:any){
-    //console.log(body)
     this._vehicle.guardarVehiculo(body).subscribe((res:any)=>{
       this.id = res.id;
       this.update.emit();
       this.loadVehicle();
-      swal('Información', 'Se guardó el vehiculo de manera exitosa', 'success');
+      Swal.fire('Información', 'Se guardó el vehiculo de manera exitosa', 'success');
     })
   }
 
@@ -167,7 +185,7 @@ export class FormVehicleComponent implements OnInit {
 
     if(this.file.type.indexOf('image')<0){
       //swal("HANSA Business", "Sólo puede elegir archivos de tipo imagen", "error");
-      swal("Información","Solo puede elegir archivos de tipo imagen", "warning");
+      Swal.fire("Información","Solo puede elegir archivos de tipo imagen", "warning");
       this.file=null;
       return ;
     }
@@ -251,9 +269,15 @@ export class FormVehicleComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(!result){
+        this.loading = false;
+        return;
+      }
       const placa = result;
       this.loading = true;
       this._vehicle.getVehicleByPlaca(placa).subscribe((res:any)=>{
+      this.vigency = 0; //ocultamos la informacion del soat
+
         if(res.length > 0){
           //console.log(res);
           const vehiculo = res[0];
@@ -287,8 +311,6 @@ export class FormVehicleComponent implements OnInit {
             });
           }
           else{
-            //el vehiculo existe pero no tiene conductor asignarlo al registro actual
-            //console.log('asignarlo, existe pero no tiene conductor')
             this.vehicle = vehiculo;
              this.imageTemp = this.vehicle.img; 
             this.edit_state = true;
@@ -307,22 +329,32 @@ export class FormVehicleComponent implements OnInit {
 
   getExternalVehicle(placa:string){
     //console.log('buscar la placa en la base de datos externa', placa)
-    this._external.getVehicleExternal(placa).subscribe(res=>{
-      if(!!res){
-        //console.log(res);
+    this._external.getVehicleExternal(placa).subscribe((res:any)=>{
+      // console.log(res);
+      // return;
+
+      if(res.status == 200){
         this.assignVehicle(res);
         this.edit_state = true;
         this.loading = false;
       }
-      else{
-        swal('Información','No se encontró el registro del vehiculo', 'info')
+      else if(res.status == 610){
+        Swal.fire('Información', res.mensaje, 'info' );
         this.loading = false;
       }
-    })
+      else{
+        Swal.fire('Información', 'Ocurrió un error en la peticion','error')
+        //puede que no haya sistema
+      }
+    }),
+    ((err) => {
+      Swal.fire('Información', 'La placa consultada, no corresponde a un vehículo existente', 'info' );
+      //puede que no haya sistema
+    });
   }
 
   async assignVehicle(data:any){
-    const {datos_tecnicos, personas} = data;
+    const {datos_tecnicos} = data;
 
     this.vehicle.placa=datos_tecnicos.placa;
     this.vehicle.industria=datos_tecnicos.industria;
@@ -336,16 +368,21 @@ export class FormVehicleComponent implements OnInit {
     this.vehicle.radicatoria=datos_tecnicos.radicatoria;
     this.vehicle.img=`data:image/png;base64,${datos_tecnicos.fotografia}`;
 
-    console.log(this.vehicle.img);
+    this.imageTemp = this.vehicle.img;
 
-    if(!!personas){
-      const propietario = personas[0];
+    if(!!data.personas){
+      const propietario = data.personas[0];
 
       this.vehicle.itv=propietario.gestion;
       this.vehicle.propietario=`${propietario.nombre} ${propietario.paterno} ${propietario.materno}`;
-      this.vehicle.ci_propietario=`${propietario.nro_documento} ${propietario.documento_complemento} ${propietario.expedicion}`;
+      this.vehicle.ci_propietario=`${propietario.nro_documento} ${propietario.documento_complemento || ''} ${this.formatExpedicion(propietario.expedicion)}`;
       this.vehicle.img_propietario=`data:image/png;base64,${propietario.fotografia}`;
     }
+  }
+
+  formatExpedicion(value:string){
+    const aux = this._list.departamentos.find(el=>(el.label == value))
+    return aux.value;
   }
 
   changeState(value:number){
@@ -363,19 +400,129 @@ export class FormVehicleComponent implements OnInit {
   }
 
   verify_soat(){
+    //console.log(moment('2023-12-31').format('DD/MM/YYYY'))
+
     this.loading_soat = true;
     setTimeout(()=>{
+      const data = this._external.getSOAT(this.vehicle.placa);
+      if(!!data){
+        const fecha_ini = data.oSDatos.SoatFechaCoberturaInicio.substring(0,10)
+        const fecha_fin = data.oSDatos.SoatFechaCoberturaFin.substring(0,10)
+
+        this.vehicle.fecha_inicio_soat = moment(fecha_ini).format('DD/MM/YYYY');
+        this.vehicle.fecha_fin_soat = moment(fecha_fin).format('DD/MM/YYYY');
+
+        if(this.vigencia_soat(fecha_ini, fecha_fin)){
+          this.vigency = 1;
+          this.vehicle.fecha_inicio_soat = fecha_ini;
+          this.vehicle.fecha_fin_soat = fecha_fin;
+          this.vehicle.soat = 1; 
+        }
+        else{
+          this.vigency = 2;
+        } 
+      }
+      else{
+        this.vigency = 3;
+      }
       this.loading_soat = false;
-      this.vigency = 1;
     }, 3000)
   }
 
+  data_soat(fecha_ini:any, fecha_fin:any){
+    if(this.vigencia_soat(fecha_ini, fecha_fin)){
+      this.vigency = 1;
+      this.vehicle.fecha_inicio_soat = moment(fecha_ini).format('DD/MM/YYYY');
+      this.vehicle.fecha_fin_soat = moment(fecha_fin).format('DD/MM/YYYY');
+      this.vehicle.soat = 1; 
+    }
+    else{
+      this.vigency = 2;
+    } 
+  }
+
+  vigencia_soat(inicio:any, fin:any){
+    const fecha_actual = new Date();
+    const f1 = new Date(inicio);
+    const f2 = new Date(fin)
+
+    if(fecha_actual >= f1 && fecha_actual <= f2){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   refreshITV(){
-    console.log('actualizar desde afuera')
+    this.loading = true;
+    this.getExternalVehicle(this.vehicle.placa);
+  }
+
+  remove(){
+    if(this.id == 0){
+      this.cleanVehicle();
+    }
+    else{
+      Swal.fire({
+        title: "Información",
+        text: `¿Esta seguro de quitar el vehículo del conductor?`,
+        icon: "warning",
+        showCancelButton: true, //
+        confirmButtonColor: "#3085d6", // 
+        cancelButtonColor: "#d33", // 
+        confirmButtonText: "Si, estoy seguro",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this._vehicle.update(this.vehicle.id, {id_conductor : null}).subscribe((res:any)=>{
+            console.log(res);
+            Swal.fire('Información', 'Se quitó el vehiculo del conductor de manera exitosa', 'success')
+            this.cleanVehicle();
+          })
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          return;
+        }
+      });
+    }
+  }
+
+  refreshVehicle(){
+    this.loadVehicleByDriverId();
+  }
+
+  cleanVehicle(){
+    this.edit_state = false;
+    this.vigency = 0;
+    //this.imageTemp = '';
+
+    this.vehicle = {
+      id:0,
+      placa:'',
+      industria:'',
+      marca:'',
+      modelo:'',
+      clase:'',
+      tvehiculo:'',
+      chasis:'',
+      color:'',
+      cilindrada:'',
+      radicatoria:'',
+      itv:'',
+      tipo:'',
+      img:'',
+      soat:0,
+      fecha_inicio_soat:'',
+      fecha_fin_soat:'',
+      propietario:'',
+      ci_propietario:'',
+      img_propietario:''
+    }
   }
 }
 
 interface VehicleData {
+  id:number;
   placa:string,
   industria:string,
   marca:string,
@@ -383,15 +530,16 @@ interface VehicleData {
   clase:string,
   tvehiculo:string,
   chasis:string,
-  color:number,
+  color:string,
   cilindrada:string,
   radicatoria:string,
   itv:string,
   tipo:string,
   img:string,
-  soat:string,
+  soat:number,
   fecha_inicio_soat:string,
   fecha_fin_soat:string,
   propietario:string,
   ci_propietario:string,
+  img_propietario:string
 }

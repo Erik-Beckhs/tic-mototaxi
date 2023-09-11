@@ -17,7 +17,7 @@ export class TableVehiclesComponent implements OnInit {
   @Output() dataEmitter = new EventEmitter<any>();
   
   vehicles:any[]=[];
-  displayedColumns: string[] = ['#', 'codigo', 'placa', 'marca', 'modelo', 'color', 'conductor', 'propietario', 'acciones'];
+  displayedColumns: string[] = ['#', 'codigo', 'imagen', 'placa', 'marca', 'modelo', 'conductor', 'propietario', 'acciones'];
  
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -31,29 +31,12 @@ export class TableVehiclesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // if(!!this.data.id){
-    //   if(this.data.module == 'vehicle'){
-    //     //cargar vehiculos sin conductores
-    //     this.loadVehicles(2);
-    //     this.displayedColumns = ['#', 'codigo', 'placa', 'marca', 'modelo', 'color', 'propietario', 'acciones'];
-
-    //   }
-    //   else if(this.data.module === 'owner'){
-    //     //cargar vehiculos sin propietarios
-    //     this.loadVehicles(3);
-    //       this.displayedColumns = ['#', 'codigo', 'placa', 'marca', 'modelo', 'color', 'conductor', 'acciones'];
-    //   }
-    // }
-    // else{
-    //   this.loadVehicles(1) //vehiculos general
-    // }
-    this.loadVehicles(1) //vehiculos general
+    this.loadVehicles()
   }
 
-  loadVehicles(type:number){
-      this._vehicle.getVehiculos(type).subscribe((res:any)=>{
+  loadVehicles(){
+      this._vehicle.getVehiculos().subscribe((res:any)=>{
         this.vehicles = res;
-        //console.log(res);
         this.dataSource = new MatTableDataSource(this.vehicles);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

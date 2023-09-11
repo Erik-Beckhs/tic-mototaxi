@@ -4,6 +4,8 @@ import { ConductorService } from 'src/app/services/conductor.service';
 import { ListsService } from 'src/app/services/lists.service';
 
 import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogSearchComponent } from 'src/app/dialogs/dialog-search/dialog-search.component';
@@ -194,6 +196,11 @@ export class FormDriverComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(!result){
+        this.loading = false;
+        return;
+      }
+      
       const cedula = result;
       this.loading = true
       this._driver.getDriverByCi(cedula).subscribe((res:any)=>{
@@ -230,30 +237,34 @@ export class FormDriverComponent implements OnInit {
     });
   }
 
-  searchExternal(value:number){
-    const response = this._external.getDriver(value);
+  searchExternal(value:any){
+    const response = this._external.getDriverExternal(value);
     if(!!response){
-      this.conductor.nombres=response.Nombres;
-      this.conductor.paterno=response.PrimerApellido;
-      this.conductor.materno=response.SegundoApellido;
-      this.conductor.ci=response.NumeroDocumento;
-      this.conductor.complemento=response.Complemento;
-      this.conductor.fotografia=response.Fotografia;
-      this.conductor.genero=response.Genero;
-      this.conductor.fecha_nac=response.FechaNacimiento;
-      this.conductor.direccion=response.Domicilio;
-      this.imageTemp = response.Fotografia;
+      this.assignSinceSegip(response);
     }
     else{
-      swal('Información', 'No se encontró el registro', 'info');
-      return;
+      Swal.fire('Información', 'No se encontró el registro', 'info');
     }
     //console.log(response);
     this.loading = false;
   }
 
   refreshSEGIP(){
-    console.log('actualizar desde segip')
+    this.loading = true;
+    this.searchExternal(this.conductor.ci);
+  }
+
+  assignSinceSegip(data:any){
+    this.conductor.nombres=data.Nombres;
+      this.conductor.paterno=data.PrimerApellido;
+      this.conductor.materno=data.SegundoApellido;
+      this.conductor.ci=data.NumeroDocumento;
+      this.conductor.complemento=data.Complemento;
+      this.conductor.fotografia=data.Fotografia;
+      this.conductor.genero=data.Genero;
+      this.conductor.fecha_nac=data.FechaNacimiento;
+      this.conductor.direccion=data.Domicilio;
+      this.imageTemp = data.Fotografia;
   }
 }
 

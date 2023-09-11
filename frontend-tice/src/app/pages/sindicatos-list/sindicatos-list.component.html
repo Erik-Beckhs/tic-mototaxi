@@ -1,10 +1,9 @@
 <mat-card class="p-4">
   <mat-card-header class="d-flex justify-content-between">
     <mat-card-title>
-      <mat-icon class="text-h6">group_work</mat-icon>
-      <span class="h4 ml-1">Lista de Sindicatos / Asociaciones</span>
+      Lista de Sindicatos / Asociaciones
     </mat-card-title>
-    <mat-card-subtitle class="text-muted ml-1">Dirección Departamental de Tránsito Santa Cruz</mat-card-subtitle>
+    <mat-card-subtitle class="text-muted ml-1">Dirección Departamental de Tránsito y Seguridad Víal Santa Cruz</mat-card-subtitle>
   </mat-card-header>
   
    <mat-card-content>
@@ -16,7 +15,7 @@
         </mat-form-field>
       </div>
       <div class="col-12 col-md-6 col-lg-6 text-right">
-        <button mat-raised-button color="secondary" [routerLink]="['/dashboard/asociacion/0']">
+        <button mat-raised-button color="primary" [routerLink]="['/dashboard/asociacion/0']">
           <i class="fa fa-plus"></i>
           <span class="ml-1">NUEVO</span>
         </button>
@@ -32,54 +31,54 @@
         </ng-container>
     
         <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> <span class="pl-3">Nombre</span> </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> <span class="pl-3">NOMBRE</span> </th>
           <td mat-cell *matCellDef="let row"> 
             <span class="pl-2">
               <img class="rounded-image" [src]="row.img">
-              {{row.nombre}} 
+              <a [routerLink]="['/dashboard/asociacion', row.id]" class="text-primary cursor ml-2">{{row.nombre}}</a>
             </span>
           </td>
         </ng-container>
     
         <ng-container matColumnDef="representante">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Representante </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> REPRESENTANTE </th>
           <td mat-cell *matCellDef="let row"> {{row.representante}} </td>
         </ng-container>
     
         <ng-container matColumnDef="ciudad">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Ciudad </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> CIUDAD </th>
           <td mat-cell *matCellDef="let row"> {{row.ciudad}} </td>
         </ng-container>
 
         <ng-container matColumnDef="direccion">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Direccion </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> DIRECCIÓN </th>
           <td mat-cell *matCellDef="let row"> {{row.direccion}} </td>
         </ng-container>
   
         <ng-container matColumnDef="fcreacion">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de fundación </th>
-          <td mat-cell *matCellDef="let row"> {{row.fcreacion | date:'shortDate'}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA DE FUNDACIÓN </th>
+          <td mat-cell *matCellDef="let row"> {{row.fcreacion | date_custom}} </td>
         </ng-container>
   
         <ng-container matColumnDef="personeria">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Personería Jurídica </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> PERSONERÍA JURIDICA </th>
           <td mat-cell *matCellDef="let row"> {{row.personeria}} </td>
         </ng-container>
   
         <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
-          <td mat-cell *matCellDef="let row">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ACCIONES </th>
+          <td mat-cell *matCellDef="let row" class="pl-3">
             <button mat-mini-fab [matMenuTriggerFor]="menu" color="secondary" aria-label="Acciones">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
               <button mat-menu-item (click)="modificar(row.id)">
                 <mat-icon>edit</mat-icon>
-                <span>Editar</span>
+                <span>EDITAR</span>
               </button>
               <button mat-menu-item (click)="eliminar(row.id)">
                 <mat-icon>delete</mat-icon>
-                <span>Eliminar</span>
+                <span>ELIMINAR</span>
               </button>
             </mat-menu>
           </td>

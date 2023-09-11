@@ -49,6 +49,9 @@
     "ci_propietario": {
       "type": "string"
     },
+    "img_propietario": {
+      "type": "string"
+    },
     "id_conductor": {
       "type": "number"
     },

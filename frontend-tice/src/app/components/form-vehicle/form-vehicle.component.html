@@ -1,12 +1,16 @@
 <mat-card>
-  <mat-card-header *ngIf="id == 0">
-      <button mat-raised-button  color="primary" (click)="openDialogVehicleSearch()">
+  <mat-card-header>
+      <button *ngIf="!vehicle.placa" mat-raised-button  color="primary" class="mx-1" (click)="openDialogVehicleSearch()">
         <mat-icon>search</mat-icon>
-        <span class="mx-1">BÚSQUEDA POR PLACA</span>
+        <span class="mx-2">BÚSQUEDA POR PLACA</span>
       </button>
-      <button *ngIf="id != 0" mat-raised-button (click)="refreshITV()">
+       <button *ngIf="vehicle.placa" color="primary" mat-raised-button (click)="refreshITV()">
         <mat-icon>refresh</mat-icon>
-        <span class="mx-1">ACTUALIZACIÓN DESDE ITV</span>
+        <span class="mx-2">ACTUALIZACIÓN DESDE ITV</span>
+      </button>
+      <button *ngIf="vehicle.placa" mat-raised-button  color="warn" class="mx-2" (click)="remove()">
+        <mat-icon>close</mat-icon>
+        <span class="mx-1">QUITAR VEHÍCULO</span>
       </button>
   </mat-card-header>
     <mat-card-content *ngIf="!loading">
@@ -145,10 +149,10 @@
                              <!--<button matTooltip="Búsqueda desde sistema ITV" type="button"  (click)="" mat-mini-fab aria-label="Búsqueda desde sistema ITV" color="secondary" class="mx-1">
                                  <mat-icon>search</mat-icon>
                              </button>-->
-                               <button matTooltip="Editar" *ngIf="edit_state == false && !!id" (click)="changeState(1)" mat-mini-fab aria-label="Editar" color="secondary">
+                               <button matTooltip="Editar" *ngIf="edit_state == false && !!id" (click)="changeState(1)" mat-mini-fab aria-label="Editar" color="primary">
                                  <mat-icon>edit</mat-icon>
                                </button>
-                               <button matTooltip="Cancelar" *ngIf="edit_state == true && !!id" (click)="changeState(0)" mat-mini-fab aria-label="Cancelar" color="secondary">
+                               <button matTooltip="Cancelar" *ngIf="edit_state == true && !!id" (click)="changeState(0)" mat-mini-fab aria-label="Cancelar" color="primary">
                                  <mat-icon>close</mat-icon>
                                </button>
                          </div>
@@ -160,7 +164,7 @@
                          <div class="d-flex" style="flex-direction:column;">
                           <img [src]="vehicle.img" class="w-200">
                           <input *ngIf="edit_state" type="file" class="my-2" (change)="onFileChange($event)">
-                          <p *ngIf="!edit_state" class="text-secondary">No se encontró ninguna imagen</p>
+                          <p *ngIf="!vehicle.img" class="text-secondary">No se encontró ninguna imagen</p>
                          </div>
                        </div>
 
@@ -181,7 +185,7 @@
                           <span class="mx-1">VERIFICAR SOAT</span> 
                         </button>
                      </div>
-                     <div class="row" *ngIf="vigency != 0">
+                     <div class="row" *ngIf="vigency != 0 && !loading_soat">
                         <div class="col-3 text-center">
                           <img class="img-soat" src="../../../assets/images/soat.png" alt="">
 
@@ -191,22 +195,22 @@
                             <div class="alert alert-success" role="alert" style="margin-bottom: 0.5rem;">
                               <span class="h5">El vehículo cuenta con SOAT vigente</span>
                             </div>
-                            <p class="text-secondary" style="margin-bottom: 0;">
-                                Fecha de Inicio: 24/09/2022
+                            <p class="text-secondary" class="ml-1" style="margin-bottom: 0;">
+                                Fecha de Inicio: {{vehicle.fecha_inicio_soat}}
                             </p>
-                            <p class="text-secondary">
-                                Fecha de Finalizacion: 24/10/2023
+                            <p class="text-secondary" class="ml-1">
+                                Fecha de Finalizacion: {{vehicle.fecha_fin_soat}}
                             </p>
                           </div>
                           <div *ngIf="vigency == 2">
-                            <div class="alert alert-warning" role="alert" style="margin-bottom: 0.5rem;">
+                            <div class="alert alert-danger" role="alert" style="margin-bottom: 0.5rem;">
                               <span class="h5">El vehículo cuenta con SOAT caducado</span>
                             </div>
                             <p class="text-secondary" style="margin-bottom: 0;">
-                                Fecha de Inicio: 24/09/2022
+                                Fecha de Inicio: {{vehicle.fecha_inicio_soat}}
                             </p>
                             <p class="text-secondary">
-                                Fecha de Finalizacion: 24/10/2023
+                                Fecha de Finalizacion: {{vehicle.fecha_fin_soat}}
                             </p>
                           </div>
                           <div *ngIf="vigency == 3">
@@ -230,7 +234,7 @@
                     Propietario
                   </mat-card-title>
                 </mat-card-header>
-                <mat-card-content>
+                <mat-card-content *ngIf="vehicle.placa">
                   <div *ngIf="!vehicle.ci_propietario" class="alert alert-warning mx-2" role="alert">
                     El vehículo no cuenta con propietario asignado
                   </div>
@@ -260,6 +264,11 @@
                     <mat-icon>add</mat-icon>
                   </button>
                 </div>-->
+                  </div>
+                </mat-card-content>
+                <mat-card-content *ngIf="!vehicle.placa">
+                  <div class="alert alert-info mx-2" role="alert">
+                    No se seleccionó el vehículo
                   </div>
                 </mat-card-content>
              </mat-card>
