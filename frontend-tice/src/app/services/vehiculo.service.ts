@@ -50,17 +50,8 @@ export class VehiculoService {
     ))
   }
 
-  getVehiculos(type:number){
-    let conditions = '}';
-    if(type==1){
-    }
-    else if(type==2){
-      conditions = `,"where":{"id_conductor":null}}`;
-    }
-    else{
-      conditions = `,"where":{"id_propietario":null}}`;
-    }
-      let url = `${base_url}/vehiculos?filter={"include":[{"relation":"conductor"},{"relation":"propietario"}]${conditions}`;
+  getVehiculos(){
+    let url = `${base_url}/vehiculos?filter={"include":[{"relation":"conductor"},{"relation":"propietario"}]}`;
       //console.log(url);
       return this.http.get(url);
   }
@@ -90,7 +81,7 @@ export class VehiculoService {
   }
 
   getVehicleByPlaca(placa:string){
-    let url = `${base_url}/vehiculos?filter[where][placa]=${placa}`;
+    let url = `${base_url}/vehiculos?filter[include]=conductor&filter[where][placa]=${placa}`;
     return this.http.get(url);
   }
 }

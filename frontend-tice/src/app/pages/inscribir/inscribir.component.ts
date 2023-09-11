@@ -202,7 +202,7 @@ export class InscribirComponent implements OnInit {
   }
 
   loadVehiculos(){
-    this._vehiculo.getVehiculos(1).subscribe((res:any)=>{
+    this._vehiculo.getVehiculos().subscribe((res:any)=>{
       this.vehiculos = res;
       //console.log(this.vehiculos);
     });

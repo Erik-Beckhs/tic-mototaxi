@@ -28,7 +28,7 @@
     "poliza": {
       "type": "string"
     },
-    "procedencia": {
+    "industria": {
       "type": "string"
     },
     "color": {
@@ -46,16 +46,31 @@
     "propietario": {
       "type": "string"
     },
+    "ci_propietario": {
+      "type": "string"
+    },
+    "img_propietario": {
+      "type": "string"
+    },
     "id_conductor": {
       "type": "number"
     },
-    "id_propietario": {
-      "type": "number"
+    "clase": {
+      "type": "string"
     },
-    "anh": {
+    "tvehiculo": {
+      "type": "string"
+    },
+    "radicatoria": {
       "type": "string"
     },
     "soat": {
+      "type": "string"
+    },
+    "fecha_inicio_soat": {
+      "type": "string"
+    },
+    "fecha_fin_soat": {
       "type": "string"
     },
     "itv": {

@@ -338,7 +338,7 @@ export class ListsService {
     'Otro'
   ]
 
-  generos:any[]=['Masculino', 'Femenino'];
+  generos:any[]=['MASCULINO', 'FEMENINO'];
 
   grados:any[]=[
     {value:'administrador', label:'Administrador'},
@@ -358,5 +358,15 @@ export class ListsService {
     {value:'usuario', label:'Usuario'}
   ]
 
-
+  departamentos = [
+    {value:'LP', label:'LA PAZ'},
+    {value:'OR', label:'ORURO'},
+    {value:'PT', label:'POTOSÍ'},
+    {value:'CB', label:'COCHABAMBA'},
+    {value:'CH', label:'CHUQUISACA'},
+    {value:'TJ', label:'TARIJA'},
+    {value:'PD', label:'PANDO'},
+    {value:'BN', label:'BENI'},
+    {value:'SC', label:'SANTA CRUZ'},
+  ]
 }

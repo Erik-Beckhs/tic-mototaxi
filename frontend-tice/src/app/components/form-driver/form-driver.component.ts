@@ -4,7 +4,12 @@ import { ConductorService } from 'src/app/services/conductor.service';
 import { ListsService } from 'src/app/services/lists.service';
 
 import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+
 import * as moment from 'moment';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogSearchComponent } from 'src/app/dialogs/dialog-search/dialog-search.component';
+import { ExternalService } from 'src/app/services/external.service';
 
 @Component({
   selector: 'app-form-driver',
@@ -21,7 +26,7 @@ export class FormDriverComponent implements OnInit {
     nombres:'',
     paterno:'',
     materno:'',
-    ci:0,
+    ci:'',
     expedicion:'',
     complemento:'',
     tipo_sangre:'',
@@ -36,6 +41,7 @@ export class FormDriverComponent implements OnInit {
     fecha_registro:moment(new Date()).format('DD/MM/YYYY')
   };
   conductor_aux:any;
+  loading:boolean=false;
 
   expedicionesList:any;
   tiposangreList:any;
@@ -50,7 +56,9 @@ export class FormDriverComponent implements OnInit {
   constructor(
     private _list:ListsService,
     private _sindicato:AsociacionService,
-    private _driver:ConductorService
+    private _driver:ConductorService,
+    public dialog: MatDialog,
+    private _external:ExternalService
     ) {
     this.loadSindicatos();
 
@@ -74,10 +82,11 @@ export class FormDriverComponent implements OnInit {
     if(this.imageTemp){
       item.fotografia = this.imageTemp;
     }
-    if(!item.fotografia){
-      swal('Información', 'Debe cargar una imagen', 'error');
-      return;
-    }
+
+    // if(!item.fotografia){
+    //   swal('Información', 'Debe cargar una imagen', 'error');
+    //   return;
+    // }
 
     if(this.id !== 0){
       this.update(item);
@@ -147,7 +156,7 @@ export class FormDriverComponent implements OnInit {
     this._driver.getConductorById(this.id).subscribe((res:any)=>{
       this.conductor = res;
       this.conductor_aux = {...this.conductor}
-      this.conductor.fecha_nac = moment(this.conductor.fecha_nac).format('YYYY-MM-DD');
+      //this.conductor.fecha_nac = moment(this.conductor.fecha_nac).format('YYYY-MM-DD');
       this.conductor.fecha_registro = moment(this.conductor.fecha_registro).format('DD/MM/YYYY');
       //console.log(this.conductor)
       if(!!this.conductor.fotografia) this.imageTemp = this.conductor.fotografia;
@@ -179,6 +188,84 @@ export class FormDriverComponent implements OnInit {
   restart(){
     this.conductor = {...this.conductor_aux}
   }
+
+  openDialog(){
+    const dialogRef = this.dialog.open(DialogSearchComponent, {
+      data: {title: 'Ingrese el Nro. de cédula sin extensión ni complemento', value: ''},
+      width:'400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(!result){
+        this.loading = false;
+        return;
+      }
+      
+      const cedula = result;
+      this.loading = true
+      this._driver.getDriverByCi(cedula).subscribe((res:any)=>{
+        //console.log(res);
+        if(res.length > 0){
+          swal('Importante', 'El conductor ya se encuentra registrado en el sistema', 'info');
+          this.loading = false;
+        }
+        else{
+          //console.log('buscamos en segip')
+          this.searchExternal(cedula);
+        }
+      })
+
+
+      // if(!!placa){
+      //   console.log('start loading');
+      //   //this._vehicle.getVehicle()
+      //   this._external.getVehicle(placa).subscribe((res:any)=>{
+      //     console.log(res);
+      //     console.log('end loading')
+      //   },
+      //   (err=>{
+      //     console.log(err);
+      //   })
+      //   )
+        
+      //   //si existe indicar que ya existe el vehiculo
+      //   //si no existe buscar en la bd de la policia
+      //   //traer informacion con mensaje
+      //   //habilitar algunos campos
+      //   //permitir guardar
+      // }
+    });
+  }
+
+  searchExternal(value:any){
+    const response = this._external.getDriverExternal(value);
+    if(!!response){
+      this.assignSinceSegip(response);
+    }
+    else{
+      Swal.fire('Información', 'No se encontró el registro', 'info');
+    }
+    //console.log(response);
+    this.loading = false;
+  }
+
+  refreshSEGIP(){
+    this.loading = true;
+    this.searchExternal(this.conductor.ci);
+  }
+
+  assignSinceSegip(data:any){
+    this.conductor.nombres=data.Nombres;
+      this.conductor.paterno=data.PrimerApellido;
+      this.conductor.materno=data.SegundoApellido;
+      this.conductor.ci=data.NumeroDocumento;
+      this.conductor.complemento=data.Complemento;
+      this.conductor.fotografia=data.Fotografia;
+      this.conductor.genero=data.Genero;
+      this.conductor.fecha_nac=data.FechaNacimiento;
+      this.conductor.direccion=data.Domicilio;
+      this.imageTemp = data.Fotografia;
+  }
 }
 
 
@@ -186,7 +273,7 @@ interface DriverData {
   nombres:string,
   paterno:string,
   materno:string,
-  ci:number,
+  ci:string,
   complemento:string,
   expedicion:string,
   tipo_sangre:string,

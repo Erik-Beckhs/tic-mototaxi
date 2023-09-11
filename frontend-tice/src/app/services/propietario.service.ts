@@ -15,6 +15,6 @@ export class PropietarioService {
   getOwners(){
     let url = `${base_url}/propietarios?filter[include]=vehiculos`;
     return this.http.get(url);
-}
+  }
 
 }

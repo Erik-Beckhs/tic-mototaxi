@@ -7,13 +7,13 @@ export class SidebarService {
 
   menu: any[] = [
     {
-      titulo: 'Empadronamiento',
+      titulo: 'Filiación',
       icono: 'ti-pencil-alt2',
       submenu: [
         //{ titulo: 'Conductor_Old', url: '/dashboard/inscribir/0' },
         { titulo: 'Conductor', url: '/dashboard/driver/0' },
-        { titulo: 'Vehiculo', url: '/dashboard/vehicle/0' },
-        { titulo: 'Propietario', url: '/dashboard/owner/0' },
+        //{ titulo: 'Vehiculo', url: '/dashboard/vehicle/0' },
+        //{ titulo: 'Propietario', url: '/dashboard/owner/0' },
         { titulo: 'Sindicatos', url: '/dashboard/asociacion/0' },
       ]
     },
@@ -24,7 +24,7 @@ export class SidebarService {
         { titulo: 'Conductores', url: '/dashboard/drivers-list' },
         { titulo: 'Vehículos', url: '/dashboard/vehicles-list' },
         { titulo: 'Sindicatos', url: '/dashboard/sindicatos' },
-        { titulo: 'Propietarios', url: '/dashboard/owners-list' },
+        //{ titulo: 'Propietarios', url: '/dashboard/owners-list' },
         //{ titulo: 'Unidades Educativas', url: '/dashboard/ueducativas' },
         //{ titulo: 'Movilidad / asociacion', url: '/dashboard/movilidad-asoc' },
         { titulo: 'Usuarios del Sistema', url: '/dashboard/habilitar' },

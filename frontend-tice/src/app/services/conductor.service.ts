@@ -63,4 +63,9 @@ export class ConductorService {
 
     // return Api().get(`/servicios/${id}?filter[include]=formas_pago&filter[include]=horarios`);
   }
+
+  getDriverByCi(cedula:number){
+    let url = `${base_url}/conductores?filter[where][ci]=${cedula}`;
+    return this.http.get(url);
+  }
 }

@@ -45,7 +45,7 @@ export class DriverComponent implements OnInit {
 
   loadDriver(){
     this._driver.getConductorById(this.id).subscribe((res:any)=>{
-      console.log(res);
+      //console.log(res);
       this.driver = res;
       // if(!!this.driver.vehiculos){
       //   console.log(this.driver.vehiculos);

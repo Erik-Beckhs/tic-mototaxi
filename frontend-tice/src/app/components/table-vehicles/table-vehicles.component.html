@@ -11,12 +11,12 @@
             <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese una palabra clave para la búsqueda" #input>
           </mat-form-field>
         </div>
-        <div class="col-12 col-md-6 col-lg-6 text-right">
+        <!--<div class="col-12 col-md-6 col-lg-6 text-right">
           <button mat-raised-button color="secondary" [routerLink]="['/dashboard/vehicle', 0]">
             <mat-icon>motorcycle</mat-icon>
             <span class="ml-1">NUEVO</span>
           </button>
-        </div>
+        </div>-->
       </div>
       
       <div class="mat-elevation-z8" >
@@ -30,6 +30,13 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header> CÓDIGO </th>
               <td mat-cell *matCellDef="let row"> {{row.codigo}} </td>
             </ng-container>
+
+            <ng-container matColumnDef="imagen">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> IMAGEN </th>
+              <td mat-cell *matCellDef="let row">
+                <img class="rounded h-40" [src]="row.img | emptyImg">
+              </td>
+          </ng-container>
 
             <ng-container matColumnDef="placa">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> PLACA </th>
@@ -46,22 +53,31 @@
               <td mat-cell *matCellDef="let row"> {{row.modelo}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="color">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> COLOR </th>
-                <td mat-cell *matCellDef="let row"> {{row.color}} </td>
-            </ng-container>
-
             <ng-container matColumnDef="conductor" >
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> CONDUCTOR </th>
-                <td mat-cell *matCellDef="let row"> 
-                <span *ngIf="row.conductor">
-                    {{row.conductor.nombres}} {{row.conductor.apellidos}}
-                </span></td>
+                <td mat-cell *matCellDef="let row" class="pl-3"> 
+                  <div *ngIf="row.conductor" class="text-left">
+                      <img class="img-circle h-35" [src]="row.conductor.fotografia">
+                      <a class="mx-2" [routerLink]="['/dashboard/driver', row.conductor.id]" class="text-primary">
+                        {{row.conductor.nombres}} {{row.conductor.paterno}} {{row.conductor.materno}}
+                      </a>
+                  </div>
+                  <span *ngIf="!row.conductor" class="badge badge-pill badge-danger ml-2">No Registrado</span>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="propietario">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> PROPIETARIO </th>
-                <td mat-cell *matCellDef="let row"><span *ngIf="!!row.propietario">{{row.propietario.nombres}} {{row.propietario.apellidos}} </span> </td>
+                <td mat-cell *matCellDef="let row" class="pl-3">
+                  <div *ngIf="!!row.propietario" class="text-left">
+                    <img class="img-circle h-35" [src]="row.img_propietario | emptyImg">                   
+                    <span class="mx-2">
+                      {{row.propietario}}
+                    </span>
+                  </div>
+
+                  <span *ngIf="!row.propietario" class="badge badge-pill badge-danger ml-2">No Registrado</span>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="acciones">
@@ -72,13 +88,13 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="update(row)">
+                    <!--<button mat-menu-item (click)="update(row)">
                       <mat-icon>edit</mat-icon>
-                      <span>Editar</span>
-                    </button>
+                      <span>EDITAR</span>
+                    </button>-->
                     <button mat-menu-item (click)="delete(row.id)">
                       <mat-icon>delete</mat-icon>
-                      <span>Eliminar</span>
+                      <span>ELIMINAR</span>
                     </button>
                   </mat-menu>
                 </div>
