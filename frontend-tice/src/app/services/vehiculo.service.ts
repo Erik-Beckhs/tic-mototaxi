@@ -24,6 +24,11 @@ export class VehiculoService {
     return this.http.patch(url, item);
   }
 
+  delete(id:number){
+    let url = `${base_url}/vehiculos/${id}`;
+    return this.http.delete(url);
+  }
+
   countPlaca(placa:string){
     let url = `${base_url}/vehiculos/count?where={"placa":"${placa}"}`;
     return this.http.get(url);
@@ -56,8 +61,6 @@ export class VehiculoService {
       return this.http.get(url);
   }
 
-  
-
   getVehiculosByTService(){
     let url = `${base_url}/vehiculos/cantTipoServ`;
     return this.http.get(url);
@@ -66,13 +69,6 @@ export class VehiculoService {
   getVehicle(id:number){
     let url = `${base_url}/vehiculos/${id}`;
     return this.http.get(url);
-  }
-
-  getLastId(){
-    let url = `${base_url}/vehiculos?filter[order]=id%20DESC`;
-    return this.http.get(url).pipe(
-      map(data=>data[0])
-    )
   }
 
   getVehicleByDriverId(driverId:any){

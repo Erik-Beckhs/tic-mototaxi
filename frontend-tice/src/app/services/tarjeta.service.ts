@@ -22,4 +22,9 @@ export class TarjetaService {
      let url = `${base_url}/tarjetas`;
      return this.http.post(url, tice);
    }
+
+   getCardsByIdDriver(id:number){
+     let url = `${base_url}/tarjetas?filter[where][id_conductor]=${id}&filter[include]=created_by`;
+     return this.http.get(url);
+   }
 }

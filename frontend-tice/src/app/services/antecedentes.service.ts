@@ -31,7 +31,7 @@ export class AntecedentesService {
   // }
 
   getAntecedentesById(idConductor:any){
-    let url = `${base_url}/conductores/${idConductor}/antecedentes`;
+    let url = `${base_url}/conductores/${idConductor}/antecedentes?filter[include]=created_by`;
     return this.http.get(url);
   }
 

@@ -1,1 +1,77 @@
-<p>table-cards works!</p>
+<mat-card class="p-4" id="htmlData">
+    <mat-card-header>
+      <mat-card-title>Lista de Tarjetas de Identificación</mat-card-title>
+      <mat-card-subtitle class="text-muted">Dirección Departamental de Tránsito Santa Cruz</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row px-2">
+        <div class="col-12 col-md-6 col-lg-6">
+          <mat-form-field appearance="standard">
+            <mat-label>Búsqueda</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese una palabra clave para la búsqueda" #input>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 text-right">
+          <button mat-raised-button color="primary" (click)="generar()">
+            <mat-icon>credit_card</mat-icon>
+            <span class="ml-1">NUEVO</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="mat-elevation-z8" >
+        <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="#">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+              <td mat-cell *matCellDef="let row; let i = index"> {{i+1}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="tipo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> TIPO </th>
+              <td mat-cell *matCellDef="let row"> {{row.tipo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NUMERO DE TARJETA </th>
+                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+              </ng-container>
+        
+            <ng-container matColumnDef="fecha_inicio">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA DE INICIO</th>
+              <td mat-cell *matCellDef="let row"> {{row.fecha_inicio | date_custom}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="fecha_finalizacion">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA DE FINALIZACIÓN </th>
+              <td mat-cell *matCellDef="let row"> {{row.fecha_fin | date_custom}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="observacion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> OBSERVACION </th>
+                <td mat-cell *matCellDef="let row"> {{row.observaciones}}</td>
+              </ng-container>
+
+            <ng-container matColumnDef="creado_por">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> CREADO POR </th>
+              <td mat-cell *matCellDef="let row"> {{row.created_by.nombres}} {{row.created_by.apellidos}}</td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No se encontraron registros</td>
+            </tr>
+      </table>
+      
+        <mat-paginator
+        fxFlex="100"
+        #paginatorRef
+        [length]="10"
+        [pageSize]="10"
+        [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+      </div>
+    
+    </mat-card-content>
+  
+  </mat-card>

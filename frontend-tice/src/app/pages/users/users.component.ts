@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
@@ -12,7 +12,6 @@ import swal from 'sweetalert';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-
   usuario:any = {
     rol:'usuario',
     state:true,
@@ -88,13 +87,35 @@ export class UsersComponent implements OnInit {
       rol
     }
 
+    if(password.length < 8){
+      Swal.fire('Información', 'La contraseña debe tener un mínimo de ocho caracteres', 'error');
+      return;
+    }
+
+    if(password !== confirm){
+      Swal.fire('Información', 'Las contraseñas no son iguales', 'error');
+      return;
+    }
+
     this._auth.createUser(dataSend).subscribe((res:any) =>{
       this._user.createUser({...dataUser, id_user:res.id}).subscribe(() =>{
-        swal('Información', 'Se creó el usuario de manera exitosa', 'success').then(()=>{
-            this.router.navigate(['/dashboard/habilitar']);
+        Swal.fire('Información', 'Se ha creado el usuario de manera exitosa', 'success').then(()=>{
+            this.router.navigate(['/dashboard/roles']);
           }
         )
       })
+    },
+    (err)=>{
+      if(!!err.error.error.details.codes.username){
+        //duplicidad de usuarios
+        Swal.fire('Mensaje de error', 'Ya existe un registro con el usuario ingresado', 'error');
+        return;
+      }
+      if(!!err.error.error.details.codes.email){
+        //duplicidad de email
+        Swal.fire('Mensaje de error', 'Ya existe un registro con el correo ingresado', 'error');
+        return;
+      }
     })
   }
 

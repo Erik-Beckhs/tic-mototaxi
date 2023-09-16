@@ -2,9 +2,10 @@ import { Component, EventEmitter, Inject, OnInit, Optional, Output, ViewChild } 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ConductorService } from 'src/app/services/conductor.service';
 import { VehiculoService } from 'src/app/services/vehiculo.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-// import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+//import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 // import * as moment from 'moment';
 
 @Component({
@@ -24,6 +25,7 @@ export class TableVehiclesComponent implements OnInit {
 
   constructor(
     private _vehicle:VehiculoService,
+    private _driver:ConductorService
     //@Optional() @Inject(MAT_DIALOG_DATA) public data: any,
     //public dialogRef: MatDialogRef<TableVehiclesComponent>,
   ) { 
@@ -51,17 +53,36 @@ export class TableVehiclesComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
-  agregar(){
-    
-  }
-
-  update(item:any){
-
+  confirm_delete(item:any){
+    Swal.fire({
+      title: "Información",
+      text: `¿Esta seguro que desea eliminar el vehículo?`,
+      icon: "warning",
+      showCancelButton: true, //
+      confirmButtonColor: "#3085d6", // 
+      cancelButtonColor: "#d33", // 
+      confirmButtonText: "SI",
+      cancelButtonText: "NO",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.delete(item)
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return;
+      }
+    });
   }
   
-  delete(id:any){
-
+  delete(item:any){
+    if(!!item.id_conductor){
+      Swal.fire('Atención', 'No se puede eliminar el vehiculo debido a que pertenece a un conductor registrado en el sistema', 'error');
+      return;
+    }
+    else{
+      this._vehicle.delete(item.id).subscribe(()=>{
+        Swal.fire('Información', 'Se eliminó el vehiculo de manera exitosa', 'success');
+        this.loadVehicles();
+      })
+    }
   }
 
   selectVehicle(item:any){
@@ -69,8 +90,4 @@ export class TableVehiclesComponent implements OnInit {
     //this.dialogRef.close();
     //console.log('el vehiculo seleccionado es:'+id)
   }
-
-  // closeDialog(){
-  //   this.dialogRef.close();
-  // }
 }

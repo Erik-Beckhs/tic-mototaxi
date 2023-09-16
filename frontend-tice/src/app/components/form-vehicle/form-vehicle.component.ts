@@ -9,7 +9,6 @@ import { MatDialog } from '@angular/material/dialog';
 //import { DialogVehicleComponent } from '../../dialogs/dialog-vehicle/dialog-vehicle.component';
 //import { DialogListOwnerComponent } from 'src/app/dialogs/dialog-list-owner/dialog-list-owner.component';
 import { DialogSearchComponent } from 'src/app/dialogs/dialog-search/dialog-search.component';
-//import swal from 'sweetalert';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 
@@ -119,7 +118,7 @@ export class FormVehicleComponent implements OnInit {
     //   return;
     // }
 
-    const current_year = new Date().getFullYear();
+    //const current_year = new Date().getFullYear();
 
     // if(this.vehicle.itv.substring(0,4) == current_year  && this.vigency == 1){ //validacion de itv y soat
     if(this.vigency == 1){ //reemplazar por este
@@ -135,7 +134,7 @@ export class FormVehicleComponent implements OnInit {
       else{
         //crear
         item.id_conductor = this.parentId;
-        this.generateCodeVehicle(item); 
+        this.save(item); 
       }
       this.edit_state = false;
     }   
@@ -155,17 +154,6 @@ export class FormVehicleComponent implements OnInit {
     return;
   }
 
-  async generateCodeVehicle(item:any){
-    //console.log(item);
-    this._vehicle.getLastId().subscribe((data:any)=>{
-      let val = parseInt(data.id) + 1;
-      let code = ('0000' + val).slice(-5);
-      const new_code = `VDTSC-${code}/${new Date().getFullYear()}`;
-      item.codigo = new_code;
-    
-      this.save(item);
-    })
-  }
 
   save(body:any){
     this._vehicle.guardarVehiculo(body).subscribe((res:any)=>{
@@ -476,8 +464,8 @@ export class FormVehicleComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           this._vehicle.update(this.vehicle.id, {id_conductor : null}).subscribe((res:any)=>{
-            console.log(res);
-            Swal.fire('Información', 'Se quitó el vehiculo del conductor de manera exitosa', 'success')
+            Swal.fire('Información', 'Se quitó el vehiculo del conductor de manera exitosa', 'success');
+            this.id = 0;
             this.cleanVehicle();
           })
         } else if (result.dismiss === Swal.DismissReason.cancel) {

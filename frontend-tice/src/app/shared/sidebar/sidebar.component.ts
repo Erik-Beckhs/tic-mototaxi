@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { SidebarService } from '../../services/sidebar.service';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sidebar',
@@ -25,16 +25,21 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
-    swal({
+    Swal.fire({
       title: "Atención",
       text:"¿Esta seguro de abandonar el sistema?",
-      icon: "info",
-      buttons: ['NO', 'SI'],
-      dangerMode: true,
-    }).then((respuesta:boolean)=>{
-      if(respuesta){
+      icon: "warning",
+      showCancelButton: true, //
+      confirmButtonColor: "#3085d6", // 
+      cancelButtonColor: "#d33", // 
+      confirmButtonText: "SI",
+      cancelButtonText: "NO",
+    }).then((result) => {
+      if (result.isConfirmed) {
         this._usuario.logout();
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return;
       }
-    })
+    });
   }
 }

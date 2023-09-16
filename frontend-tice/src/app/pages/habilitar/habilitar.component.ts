@@ -4,10 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { UsuarioService } from '../../services/usuario.service';
 import { AuthService } from 'src/app/services/auth.service';
-
-
-
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 export interface UserData {
   id: string;
@@ -23,7 +20,7 @@ export interface UserData {
 })
 export class HabilitarComponent implements OnInit {
 
-  displayedColumns: string[] = ['#', 'nombres', 'apellidos', 'username', 'grado', 'estado', 'rol', 'acciones'];
+  displayedColumns: string[] = ['#', 'grado','nombres', 'apellidos', 'username', 'estado', 'rol', 'acciones'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -39,7 +36,7 @@ export class HabilitarComponent implements OnInit {
     private _usuario:UsuarioService,
     private _auth:AuthService
     ) { 
-      this.dataSource = new MatTableDataSource(this.usuarios);
+      //this.dataSource = new MatTableDataSource(this.usuarios);
       this.loadUsuarios();
   }
 
@@ -76,23 +73,29 @@ export class HabilitarComponent implements OnInit {
 
   eliminar(id:any, id_user:any){
     //alert("eliminar"+value);
-    swal({
-      title: "Importante",
+    Swal.fire({
+      title: "Información",
       text:"¿Esta seguro que desea eliminar el registro?",
-      icon: "info",
-      buttons: ['NO', 'SI'],
-      dangerMode: true,
-    }).then((respuesta:boolean)=>{
-      if(respuesta){
+      icon: "warning",
+      showCancelButton: true, //
+      confirmButtonColor: "#3085d6", // 
+      cancelButtonColor: "#d33", // 
+      confirmButtonText: "SI",
+      cancelButtonText: "NO",
+    }).then((result) => {
+      if (result.isConfirmed) {
         this._usuario.deleteUser(id).subscribe(()=>{
-            this._usuario.deleteUserPrincipal(id_user).subscribe(()=>{
-              swal('Información', 'Se eliminó al usuario de manera exitosa', 'success').then(()=>{
-                this.loadUsuarios();
-            })
+          this._usuario.deleteUserPrincipal(id_user).subscribe(()=>{
+            Swal.fire('Información', 'Se eliminó al usuario de manera exitosa', 'success').then(()=>{
+              this.loadUsuarios();
           })
         })
+      })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return;
       }
-    })
+    });
+
   }
 
   changeRole(id:number, event:any){

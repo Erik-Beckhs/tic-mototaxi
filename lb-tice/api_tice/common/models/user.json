@@ -20,7 +20,7 @@
   },
   "validations": [],
   "relations": {
-    "id_user": {
+    "user": {
       "type": "hasOne",
       "model": "user_data",
       "foreignKey": "id_user"

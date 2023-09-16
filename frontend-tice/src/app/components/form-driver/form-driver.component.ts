@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AsociacionService } from 'src/app/services/asociacion.service';
 import { ConductorService } from 'src/app/services/conductor.service';
 import { ListsService } from 'src/app/services/lists.service';
-
-import swal from 'sweetalert';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 import * as moment from 'moment';
@@ -58,7 +57,8 @@ export class FormDriverComponent implements OnInit {
     private _sindicato:AsociacionService,
     private _driver:ConductorService,
     public dialog: MatDialog,
-    private _external:ExternalService
+    private _external:ExternalService,
+    private router:Router
     ) {
     this.loadSindicatos();
 
@@ -92,9 +92,8 @@ export class FormDriverComponent implements OnInit {
       this.update(item);
     }  
     else{
-      this.generateCodeDriver(item); //primero se genera el codigo y luego se guarda
+      this.save(item); //primero se genera el codigo y luego se guarda
     }
-
   }
 
   update(item:any){
@@ -102,21 +101,19 @@ export class FormDriverComponent implements OnInit {
       this.id = res.id;
       this.create.emit(this.id);
       this.loadDriver();
-      swal('Información', `Se modificó el registro de manera exitosa`, 'success').then(()=>{
+      Swal.fire('Información', `Se modificó el registro de manera exitosa`, 'success').then(()=>{
         this.edit_state = false;
-        
       })
     })
   }
   
   async save(item:any){
-    // await this.generateCodeDriver();
 
     this._driver.save({...item, fecha_registro:new Date().toISOString()}).subscribe((res:any)=>{
       this.id = res.id;
       this.create.emit(this.id);
       this.loadDriver();
-      swal("Información", "Se registró el conductor de manera correcta", "success").then(()=>{
+      Swal.fire("Información", "Se registró al conductor de manera exitosa", "success").then(()=>{
         this.edit_state = false;
       })
     }) 
@@ -136,7 +133,7 @@ export class FormDriverComponent implements OnInit {
     }
 
     if(this.file.type.indexOf('image') < 0){
-      swal("Información","Solo puede elegir archivos de tipo imagen", "warning");
+      Swal.fire("Información","Solo puede elegir archivos de tipo imagen", "warning");
       this.file=null;
       return ;
     }
@@ -160,17 +157,6 @@ export class FormDriverComponent implements OnInit {
       this.conductor.fecha_registro = moment(this.conductor.fecha_registro).format('DD/MM/YYYY');
       //console.log(this.conductor)
       if(!!this.conductor.fotografia) this.imageTemp = this.conductor.fotografia;
-    })
-  }
-
-  async generateCodeDriver(item:any){
-    this._driver.getLastID().subscribe((data:any)=>{
-      let val = parseInt(data.id) + 1;
-      let code = ('0000' + val).slice(-5);
-      const new_code = `CDT-${code}/${new Date().getFullYear()}`;
-      item.codigo = new_code;
-    
-      this.save(item);
     })
   }
 
@@ -206,7 +192,7 @@ export class FormDriverComponent implements OnInit {
       this._driver.getDriverByCi(cedula).subscribe((res:any)=>{
         //console.log(res);
         if(res.length > 0){
-          swal('Importante', 'El conductor ya se encuentra registrado en el sistema', 'info');
+          Swal.fire('Importante', 'El conductor ya se encuentra registrado en el sistema', 'info');
           this.loading = false;
         }
         else{
@@ -214,26 +200,6 @@ export class FormDriverComponent implements OnInit {
           this.searchExternal(cedula);
         }
       })
-
-
-      // if(!!placa){
-      //   console.log('start loading');
-      //   //this._vehicle.getVehicle()
-      //   this._external.getVehicle(placa).subscribe((res:any)=>{
-      //     console.log(res);
-      //     console.log('end loading')
-      //   },
-      //   (err=>{
-      //     console.log(err);
-      //   })
-      //   )
-        
-      //   //si existe indicar que ya existe el vehiculo
-      //   //si no existe buscar en la bd de la policia
-      //   //traer informacion con mensaje
-      //   //habilitar algunos campos
-      //   //permitir guardar
-      // }
     });
   }
 
@@ -265,6 +231,33 @@ export class FormDriverComponent implements OnInit {
       this.conductor.fecha_nac=data.FechaNacimiento;
       this.conductor.direccion=data.Domicilio;
       this.imageTemp = data.Fotografia;
+  }
+
+  confirm_delete(){
+      Swal.fire({
+        title: "Información",
+        text: `¿Esta seguro que desea eliminar el registro? Se eliminará toda la información relacionada con el conductor`,
+        icon: "warning",
+        showCancelButton: true, //
+        confirmButtonColor: "#3085d6", // 
+        cancelButtonColor: "#d33", // 
+        confirmButtonText: "SI",
+        cancelButtonText: "NO",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.delete();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          return;
+        }
+      });
+  }
+
+  delete(){
+    this._driver.deleteConductor(this.id).subscribe(()=>{
+      Swal.fire('Información', 'Se eliminó al conductor de manera exitosa', 'success').then(()=>{
+        this.router.navigate(['/dashboard/drivers']);
+      })
+    })
   }
 }
 

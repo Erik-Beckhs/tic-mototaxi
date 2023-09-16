@@ -4,7 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AntecedentesService } from 'src/app/services/antecedentes.service';
 import * as moment from 'moment';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-antecedente-dialog',
@@ -29,6 +30,7 @@ export class AntecedenteDialogComponent implements OnInit {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
     private _antecedente:AntecedentesService,
     public dialogRef:MatDialogRef<any>,
+    private _auth:AuthService
     //private router:Router
   ) { 
     this.parentId=this.data.parentId;
@@ -59,10 +61,11 @@ export class AntecedenteDialogComponent implements OnInit {
 
   register(item:any){
     item.id_conductor = this.parentId;
+    item.creado_por = this._auth.user_data.id;
     this._antecedente.createAntecedente(item).subscribe(()=>{
       this.create.emit(1);
       this.dialogRef.close();
-      swal('Información', 'Se registró su antecedente de manera exitosa', 'success');
+      Swal.fire('Información', 'Se registró su antecedente de manera exitosa', 'success');
     })
   }
 
@@ -79,7 +82,7 @@ export class AntecedenteDialogComponent implements OnInit {
     this._antecedente.update(id, item).subscribe(()=>{
       this.create.emit(1);
       this.dialogRef.close();
-      swal('Información', 'Se modificó el registro', 'success');
+      Swal.fire('Información', 'Se modificó el registro', 'success');
     })
   }
 

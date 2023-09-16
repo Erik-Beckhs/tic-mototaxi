@@ -28,7 +28,7 @@
         
             <ng-container matColumnDef="codigo">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> CÓDIGO </th>
-              <td mat-cell *matCellDef="let row"> {{row.codigo}} </td>
+              <td mat-cell *matCellDef="let row"> {{row.id | code_vehicle}} </td>
             </ng-container>
 
             <ng-container matColumnDef="imagen">
@@ -92,7 +92,7 @@
                       <mat-icon>edit</mat-icon>
                       <span>EDITAR</span>
                     </button>-->
-                    <button mat-menu-item (click)="delete(row.id)">
+                    <button mat-menu-item (click)="confirm_delete(row)">
                       <mat-icon>delete</mat-icon>
                       <span>ELIMINAR</span>
                     </button>

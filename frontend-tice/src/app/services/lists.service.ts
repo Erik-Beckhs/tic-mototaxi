@@ -341,11 +341,15 @@ export class ListsService {
   generos:any[]=['MASCULINO', 'FEMENINO'];
 
   grados:any[]=[
-    {value:'administrador', label:'Administrador'},
-    {value:'sarg_primero', label:'Sargento Primero'},
-    {value:'sarg_segundo', label:'Sargento Segundo'},
-    {value:'cabo', label:'Cabo'},
-    {value:'sof_primero', label:'Suboficial Primero'},
+    'Alumno',
+    'Sargento',
+    'Sargento Segundo',
+    'Sargento Primero',
+    'Sargento Mayor',
+    'Suboficial Segundo',
+    'Suboficial Primero',
+    'Suboficial Mayor',
+    'Suboficial Superior'
   ]
 
   states_user = [
