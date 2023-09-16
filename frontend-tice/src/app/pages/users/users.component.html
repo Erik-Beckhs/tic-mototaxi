@@ -3,8 +3,8 @@
       <div class="col-8">
         <mat-card>
           <mat-card-header>
-            <mat-card-title class="row pl-3">
-              <i class="fa fa-user-circle fa-2x"></i>
+            <mat-card-title class="row">
+              <mat-icon>user</mat-icon>
               <span class="box-title m-b-0 h5 ml-2">{{state_user}} Usuario</span>
             </mat-card-title>
             <mat-card-subtitle class="text-muted font-13 mt-1 pl-3"> Formulario de creación de usuarios </mat-card-subtitle>
@@ -16,7 +16,7 @@
                     <div class="form-group">
                       <label for="exampleInputPassword1">Grado</label>
                       <select class="form-control" [(ngModel)]="usuario.grado" id="grado" name="grado">
-                        <option *ngFor="let item of gradosList" [value]="item.value">{{item.label}}</option>
+                        <option *ngFor="let item of gradosList" [value]="item">{{item}}</option>
                       </select>
                     </div>
                     <div class="row">
@@ -51,12 +51,12 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Contraseña</label>
-                                <input id="password" type="password" class="form-control" [(ngModel)]="usuario.password" name="password" required>
+                                <input matTooltip="Ingrese al menos 8 caracteres" id="password" type="password" class="form-control" [(ngModel)]="usuario.password" name="password" required>
                               </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Confirmar Contraseña</label>
+                                <label for="confirm">Confirmar Contraseña</label>
                                 <input id="confirm" type="password" class="form-control" [(ngModel)]="usuario.confirm" name="confirm" required>
                             </div>
                         </div>
@@ -80,10 +80,10 @@
                         </div>
                       </div>
                    <div class="d-flex justify-content-end">
-                      <button [disabled]="f.invalid" type="submit" mat-raised-button color="primary" class="btn btn-success waves-effect waves-light m-r-10 form-control">
-                        <i class="fa fa-save"></i>
-                        <span class="mx-1">GUARDAR</span>
-                         </button>
+                      <button [disabled]="f.invalid" mat-raised-button type="submit" color="primary" class="btn btn-success waves-effect waves-light m-r-10 form-control">
+                        <mat-icon>save</mat-icon>
+                        <span class="mx-2">GUARDAR</span>
+                      </button>
                    </div>
                   </form>
               </div>

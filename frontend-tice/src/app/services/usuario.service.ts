@@ -31,20 +31,10 @@ export class UsuarioService {
   }
 
   logout() {
-    // localStorage.removeItem('token');
-
-    // this.auth2.signOut().then(() => {
-
-    //   this.ngZone.run(() => {
-    //     this.router.navigateByUrl('/');
-    //   })
-    // });
-    //let token = localStorage.getItem('token');
-    //let url = `${base_url}/Users/logout?access_token=${token}`;
     localStorage.removeItem('current_user');
+    localStorage.removeItem('user_data');
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');
-    //return this.http.post(url, {headers:this.headers});
   }
 
   validarToken(): Observable<boolean> {

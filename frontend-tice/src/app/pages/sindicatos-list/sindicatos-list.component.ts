@@ -4,7 +4,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { AsociacionService } from '../../services/asociacion.service';
 
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
 //reportes
@@ -60,28 +60,27 @@ export class SindicatosListComponent implements AfterViewInit {
   }
 
   eliminar(id:number){
-    //console.log(element);
-    swal({
-      title: "Dirección Nacional de Transito",
-      text:"Atencion!! Se eliminará el sindicato y los conductores registrados en la asociación. ¿Desea eliminarlo de todas formas?",
+    Swal.fire({
+      title: "Advertencia",
+      text:"Se eliminará el sindicato y los conductores registrados en la asociación. ¿Desea eliminarlo de todas formas?",
       icon: "warning",
-      buttons: ['NO', 'SI'],
-      dangerMode: true,
-    }).then((respuesta:boolean)=>{
-      if(respuesta){
-        //TODO eliminar lista de antecedentes dado el id de conductor
-        this._asociaciones.deleteAsociacion(id).subscribe((data:any)=>{
-          if(data.count){
-            this.loadAsociaciones();
-            swal('Información', `Se eliminó el registro de manera exitosa`, 'success');
-            return;
-          }
-          else{
-            swal('Información', 'Ocurrió un error al eliminar, intente más tarde', 'error');
-          }
+      showCancelButton: true, //
+      confirmButtonColor: "#3085d6", // 
+      cancelButtonColor: "#d33", // 
+      confirmButtonText: "SI",
+      cancelButtonText: "NO",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._asociaciones.deleteAsociacion(id).subscribe(()=>{
+          this.loadAsociaciones();
+          Swal.fire('Información', `Se eliminó el registro de manera exitosa`, 'success');
+          return;
         })
+
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return;
       }
-    })
+    });
   }
 
   modificar(element:any){

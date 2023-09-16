@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConductorService } from '../../services/conductor.service';
 
-import swal from 'sweetalert';
 import Swal from 'sweetalert2';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -130,24 +129,26 @@ export class TableDriversComponent implements OnInit {
   }
   
   delete(idCond:any){
-    //alert("eliminar"+value);
-    swal({
-      title: "Dirección Nacional de Transito",
-      text:"¿Esta seguro que desea eliminar el registro? Se eliminará el conductor, el vehiculo y los antecedentes",
-      icon: "info",
-      buttons: ['NO', 'SI'],
-      dangerMode: true,
-    }).then((respuesta:boolean)=>{
-      if(respuesta){
-        //TODO eliminar lista de antecedentes dado el id de conductor
+    Swal.fire({
+      title: "Información",
+      text: `¿Esta seguro que desea eliminar el registro? Se eliminará toda la información relacionada con el conductor`,
+      icon: "warning",
+      showCancelButton: true, //
+      confirmButtonColor: "#3085d6", // 
+      cancelButtonColor: "#d33", // 
+      confirmButtonText: "SI",
+      cancelButtonText: "NO",
+    }).then((result) => {
+      if (result.isConfirmed) {
         this._conductor.deleteConductor(idCond).subscribe(()=>{
           Swal.fire('Información', 'Se eliminó al conductor de manera correcta', 'success').then(()=>{
             this.loadDriversGral();
           })
         })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return;
       }
-      //console.log('no eliminar solo cerrar modal');
-    })
+    });
   }
 
   remove(id:number){

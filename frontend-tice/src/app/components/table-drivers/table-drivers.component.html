@@ -30,7 +30,7 @@
           <ng-container matColumnDef="codigo">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> CÓDIGO </th>
             <td mat-cell *matCellDef="let row"> 
-              <a [routerLink]="['/dashboard/driver', row.id]" class="text-primary cursor">{{row.codigo}}</a>
+              <a [routerLink]="['/dashboard/driver', row.id]" class="text-primary cursor">{{row.id | code_driver}}</a>
             </td>
           </ng-container>
       
@@ -39,7 +39,7 @@
             <td mat-cell *matCellDef="let row" class="text-left">
               <span class="pl-5">
                 <img class="img-circle h-35" [src]="row.fotografia">
-                {{row.nombres}} 
+                {{row.nombres}} {{row.paterno}} {{row.materno}}
               </span>
             </td>
           </ng-container>

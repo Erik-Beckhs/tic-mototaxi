@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import Swal from 'sweetalert2';
-import swal  from 'sweetalert';
+//import swal  from 'sweetalert';
 import { AuthService } from '../../services/auth.service';
 
 declare const gapi:any;
@@ -43,7 +43,6 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-
     this.usuarioService.login( this.loginForm.value )
       .subscribe( resp => {
 
@@ -58,13 +57,17 @@ export class LoginComponent implements OnInit {
         //seteamos el usuario
         this.auth.setUser(resp);
 
+         //seteamos la data del usuario y navegamos a principal
+         this.auth.setUserData(resp.userId);
+
         // Navegar al Dashboard
-        this.router.navigateByUrl('/dashboard');
+        // wait for the last function
+        setTimeout(() => {
+          this.router.navigateByUrl('/dashboard');
+        }, 1000);
 
       }, (err) => {
-        // Si sucede un error
-        //Swal.fire('Error', err.error.msg, 'error' );
-        swal("Mensaje de Error", "Error, credenciales no validas", "error");
+        Swal.fire("Mensaje de Error", "Error, credenciales no válidas", "error");
       });
 
   }

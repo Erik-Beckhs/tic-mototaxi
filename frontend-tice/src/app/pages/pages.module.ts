@@ -35,7 +35,6 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
-import { InscribirComponent } from './inscribir/inscribir.component';
 import { ListasComponent } from './listas/listas.component';
 import { AsociacionComponent } from './asociacion/asociacion.component';
 import { HabilitarComponent } from './habilitar/habilitar.component';
@@ -67,7 +66,6 @@ import { OwnersListComponent } from './owners-list/owners-list.component';
     RxjsComponent,
     PrincipalComponent,
     EstadisticasComponent,
-    InscribirComponent,
     ListasComponent,
     AsociacionComponent,
     HabilitarComponent,
@@ -96,9 +94,6 @@ import { OwnersListComponent } from './owners-list/owners-list.component';
     HabilitarComponent,
     SindicatosListComponent,
     ProfileComponent,
-    // UeducativaComponent,
-    // UeducativasComponent,
-    InscribirComponent,
     ImprimirTICEComponent
   ],
   imports: [ 

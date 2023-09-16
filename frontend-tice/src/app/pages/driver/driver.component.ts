@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConductorService } from 'src/app/services/conductor.service';
 
 @Component({
@@ -20,7 +20,8 @@ export class DriverComponent implements OnInit {
 
   constructor(
     private activatedRoute:ActivatedRoute,
-    private _driver:ConductorService
+    private _driver:ConductorService,
+    private router:Router
   ) 
   {
     this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
@@ -45,13 +46,10 @@ export class DriverComponent implements OnInit {
 
   loadDriver(){
     this._driver.getConductorById(this.id).subscribe((res:any)=>{
-      //console.log(res);
       this.driver = res;
-      // if(!!this.driver.vehiculos){
-      //   console.log(this.driver.vehiculos);
-      //   this.id_vehiculo = this.driver.vehiculos[0].id;
-      // } 
+    },
+    (err:any)=>{
+      this.router.navigate(['/dashboard/drivers']);
     })
   }
-
 }

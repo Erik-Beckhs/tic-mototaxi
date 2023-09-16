@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment.prod';
 import { throwError } from 'rxjs';
+//import { Router } from '@angular/router';
 
 const base_url = environment.base_url;
 
@@ -11,11 +12,13 @@ const base_url = environment.base_url;
 })
 export class AuthService {
   user:any;
+  user_data:any;
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    //private router:Router
     ) { 
-    
+    this.getCurrentUserData();
   }
 
   // registerUser(user:any){
@@ -32,6 +35,17 @@ export class AuthService {
   setUser(user){
     let user_string = JSON.stringify(user);
     localStorage.setItem('current_user', user_string);  
+  }
+
+  setUserData(id:any){
+    let url = `${base_url}/users_data?filter[where][id_user]=${id}`;
+    this.http.get(url).subscribe((res)=>{
+      let user_string = JSON.stringify(res[0]);
+      localStorage.setItem('user_data', user_string);  
+
+      //redirigimos a principal
+      //this.router.navigateByUrl('/dashboard');
+    })
   }
 
   setToken(token:any){
@@ -52,10 +66,18 @@ export class AuthService {
     return this.user;
   }
 
+  getCurrentUserData(){
+    const a = localStorage.getItem('user_data');
+
+    if(!!a){
+      this.user_data = JSON.parse(a);
+    }
+    return this.user_data;
+  }
+
   logout(){
     //let token = this.getToken()
     //let url = `${base_url}/Users/logout?access_token=${token}`;
-    //localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
     //return this.http.post(url, {headers:this.headers});
   }

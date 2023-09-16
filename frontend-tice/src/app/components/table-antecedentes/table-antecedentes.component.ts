@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { AntecedenteDialogComponent } from '../antecedente-dialog/antecedente-dialog.component';
 
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import { MatSort } from '@angular/material/sort';
 
@@ -22,7 +22,7 @@ export class TableAntecedentesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   
   antecedentes:any[]=[];
-  displayedColumns: string[] = ['#', 'fecha', 'caso', 'disposicion', 'naturaleza', 'acciones'];
+  displayedColumns: string[] = ['#', 'fecha', 'caso', 'disposicion', 'naturaleza', 'creado_por', 'acciones'];
   
   constructor(
     private _antecedente:AntecedentesService,
@@ -45,21 +45,25 @@ export class TableAntecedentesComponent implements OnInit {
   }
 
   delete(id:any){
-    //console.log(id);
-    swal({
-      title: "Eliminar antecedente",
-      text:"¿Esta seguro que desea eliminar el antecedente?",
-      icon: "info",
-      buttons: ['NO', 'SI'],
-      dangerMode: true,
-    }).then((respuesta:boolean)=>{
-      if(respuesta){
+    Swal.fire({
+      title: "Información",
+      text: `¿Esta seguro que desea eliminar el antecedente?`,
+      icon: "warning",
+      showCancelButton: true, //
+      confirmButtonColor: "#3085d6", // 
+      cancelButtonColor: "#d33", // 
+      confirmButtonText: "SI",
+      cancelButtonText: "NO",
+    }).then((result) => {
+      if (result.isConfirmed) {
         this._antecedente.delete(id).subscribe(()=>{
           this.loadAntecedentes();
-          swal('Información', 'Se eliminó el registro de manera exitosa', 'success');
+          Swal.fire('Información', 'Se eliminó el registro de manera exitosa', 'success');
         })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return;
       }
-    })
+    });
   }
 
   update(item:any){
@@ -91,7 +95,6 @@ export class TableAntecedentesComponent implements OnInit {
     this._antecedente.getAntecedentesById(this.id).subscribe((res:any)=>{
       this.antecedentes = res;
       this.dataSource = new MatTableDataSource(this.antecedentes);
-
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })

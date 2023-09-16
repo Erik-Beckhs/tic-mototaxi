@@ -8,7 +8,7 @@
             {{driver.nombres}} {{driver.apellidos}}
         </mat-card-title>
         <mat-card-subtitle class="text-center my-2" *ngIf="id != 0">
-          Cedula: {{driver.ci}} {{driver.expedicion}} - Codigo: {{driver.codigo}}
+          Cedula: {{driver.ci}} {{driver.expedicion}} - Codigo: {{driver.id | code_driver}}
         </mat-card-subtitle>
       </div>
     </div>

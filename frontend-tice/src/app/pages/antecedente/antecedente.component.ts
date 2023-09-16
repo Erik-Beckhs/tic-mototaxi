@@ -2,15 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { AntecedentesService } from 'src/app/services/antecedentes.service';
 import { ConductorService } from 'src/app/services/conductor.service';
 import { VehiculoService } from 'src/app/services/vehiculo.service';
 import { AntecedenteDialogComponent } from '../../components/antecedente-dialog/antecedente-dialog.component';
-//import { UserData } from '../consultar/consultar.component';
 
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import * as printJS from 'print-js';
 
 @Component({
@@ -29,7 +27,7 @@ export class AntecedenteComponent implements OnInit {
 
   antecedentes:any[]=[];
 
-  displayedColumns: string[] = ['#', 'fecha', 'caso', 'disposicion', 'naturaleza', 'acciones'];
+  displayedColumns: string[] = ['#', 'fecha', 'caso', 'disposicion', 'naturaleza', 'creado_por', 'acciones'];
   //dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -97,23 +95,25 @@ export class AntecedenteComponent implements OnInit {
   }
 
   eliminar(id:any){
-    //console.log(id);
-    swal({
-      title: "Eliminar antecedente",
+    Swal.fire({
+      title: "Información",
       text:"¿Esta seguro que desea eliminar el antecedente?",
-      icon: "info",
-      buttons: ['NO', 'SI'],
-      dangerMode: true,
-    }).then((respuesta:boolean)=>{
-      if(respuesta){
-        //TODO eliminar lista de antecedentes dado el id de conductor
+      icon: "warning",
+      showCancelButton: true, //
+      confirmButtonColor: "#3085d6", // 
+      cancelButtonColor: "#d33", // 
+      confirmButtonText: "SI",
+      cancelButtonText: "NO",
+    }).then((result) => {
+      if (result.isConfirmed) {
         this._antecedente.delete(id).subscribe(()=>{
           this.loadAntecedentes();
-          swal('Antecedente eliminado', 'Se eliminó el antecedente de manera exitosa', 'success');
+          Swal.fire('Información', 'Se eliminó el antecedente de manera exitosa', 'success');
         })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return;
       }
-      //console.log('no eliminar solo cerrar modal');
-    })
+    });
   }
 
   imprimir(){

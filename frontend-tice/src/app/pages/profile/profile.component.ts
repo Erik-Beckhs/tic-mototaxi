@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 //services
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ListsService } from 'src/app/services/lists.service';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -38,40 +38,47 @@ export class ProfileComponent implements OnInit {
   }
 
   confirmUpdate(user:any){
-    swal({
-      title: "Advertencia",
-      text:"¿Esta seguro de cambiar la información?",
-      icon: "info",
-      buttons: ['NO', 'SI'],
-      dangerMode: true,
-    }).then((respuesta:boolean)=>{
-      if(respuesta){
+    Swal.fire({
+      title: "Información",
+      text:"¿Esta seguro de cambiar la información del Usuario?",
+      icon: "warning",
+      showCancelButton: true, //
+      confirmButtonColor: "#3085d6", // 
+      cancelButtonColor: "#d33", // 
+      confirmButtonText: "SI",
+      cancelButtonText: "NO",
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.updateUserData(user);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return;
       }
-    })
+    });
   }
 
   updateUserData(user:any){
-    this._usuario.updateUserData(this.id, user).subscribe((res:any)=>{
-      //console.log(res);
-      this.updateUserPrincipal(user); //modificamos el username y el email
+    this._usuario.updateUserData(this.id, user).subscribe(()=>{
+      this.updateUserPrincipal(user);
     })
   }
 
   updateUserPrincipal(data:any){
     const dataSend = {email:data.email, username:data.username}
     this._auth.updateUser(this.id_user, dataSend).subscribe(()=>{
-      swal('Información', 'Se modificó la información de forma exitosa', 'success');
-      this.updateHeader(dataSend)
+      Swal.fire('Información', 'Se modificó la información de forma exitosa', 'success')
+      .then(()=>{
+        this.updateHeader(dataSend)
+      })
     })
   }
 
   updateHeader(data:any){
-    const {username, email} = data
+    const {username, email} = data;
     const user = this._auth.getCurrentUser();
     user.user.username = username;
     user.user.email = email
     this._auth.setUser(user);
+    this._auth.setUserData(user.userId);
     location.reload();
   }
   
@@ -105,8 +112,8 @@ export class ProfileComponent implements OnInit {
     }
 
     if(this.file.type.indexOf('image')<0){
-      //swal("HANSA Business", "Sólo puede elegir archivos de tipo imagen", "error");
-      alert("Solo puede elegir archivos de tipo imagen");
+      Swal.fire("Información", "Sólo puede elegir archivos de tipo imagen", "error");
+      //alert("Solo puede elegir archivos de tipo imagen");
       this.file=null;
       return ;
     }

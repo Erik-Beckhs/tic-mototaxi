@@ -1,10 +1,5 @@
-<!-- ============================================================== -->
-<!-- Left Sidebar - style you can find in sidebar.scss  -->
-<!-- ============================================================== -->
 <aside class="left-sidebar">
-    <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="user-profile">
@@ -12,7 +7,7 @@
                     <ul aria-expanded="false" class="collapse">
                         <li><a [routerLink]="['/dashboard/profile']" routerLinkActive="router-link-active" >Mi Perfil </a></li>
                         <li><a [routerLink]="['/dashboard/account-settings']">Temas</a></li>
-                        <li><a [routerLink]="['/dashboard/change-password']" routerLinkActive="router-link-active">Configuración</a></li>
+                        <li><a [routerLink]="['/dashboard/password']" routerLinkActive="router-link-active">Configuración</a></li>
                         <li><a class="cursor" (click)="logout()">Salir</a></li>
                     </ul>
                 </li>
@@ -39,14 +34,9 @@
                     </ul>
                 </li>
                 <li class="">
-                    <a class="waves-dark" [routerLink]="['/dashboard/estadisticas']" routerLinkActive="router-link-active"> <i class="ti-stats-up"></i><span class="hide-menu">Estadísticas </span></a>
+                    <a class="waves-dark" [routerLink]="['/dashboard/statistics']" routerLinkActive="router-link-active"> <i class="ti-stats-up"></i><span class="hide-menu">Estadísticas </span></a>
                 </li>
             </ul>
         </nav>
-        <!-- End Sidebar navigation -->
     </div>
-    <!-- End Sidebar scroll-->
 </aside>
-<!-- ============================================================== -->
-<!-- End Left Sidebar - style you can find in sidebar.scss  -->
-<!-- ============================================================== -->

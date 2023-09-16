@@ -31,7 +31,18 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "antecedentes_register": {
+      "type": "hasMany",
+      "model": "antecedente",
+      "foreignKey": "creado_por"
+    },
+    "card_register": {
+      "type": "hasMany",
+      "model": "tarjeta",
+      "foreignKey": "creado_por"
+    }
+  },
   "acls": [],
   "methods": {}
 }

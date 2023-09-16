@@ -25,7 +25,7 @@ export class ConductorService {
   }
 
   getConductores(){
-      let url = `${base_url}/conductores?filter[include]=asociacion&filter[include]=vehiculos`;
+      let url = `${base_url}/conductores?filter[include]=asociacion&filter[include]=vehiculos&filter[order]=id DESC`;
       return this.http.get(url);
   }
 
@@ -43,14 +43,6 @@ export class ConductorService {
     let url = `${base_url}/conductores/${id}?filter[include]=vehiculos`;
     return this.http.get(url);
   }
-  
-  getLastID(){
-    let url = `${base_url}/conductores/ultimoID`;
-    return this.http.get(url)
-    .pipe(map(
-      data=>data[0]
-    ))
-  }
 
   getCountDriversByGenero(){
     let url= `${base_url}/conductores/countByGenero`;
@@ -66,6 +58,11 @@ export class ConductorService {
 
   getDriverByCi(cedula:number){
     let url = `${base_url}/conductores?filter[where][ci]=${cedula}`;
+    return this.http.get(url);
+  }
+
+  getCountDriversByGender(){
+    let url = `${base_url}/conductores/countByGenero`;
     return this.http.get(url);
   }
 }

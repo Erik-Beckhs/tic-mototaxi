@@ -11,8 +11,8 @@ import { TarjetaService } from '../../services/tarjeta.service';
 })
 export class EstadisticasComponent implements OnInit {
   year:any=new Date().getFullYear();
-  dataMonth:any[]=[102, 95, 115, 116, 100];
-  meses:any[]=['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'];
+  data1:any[]=[];
+  months:any[]=['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
   conductores:any;
 
@@ -29,8 +29,8 @@ export class EstadisticasComponent implements OnInit {
   labels2: string[] = [];
   data2:any = [];
 
-  labels3: string[] = ['Femenino', 'Masculino'];
-  data3:any = [32, 244];
+  labels3: string[] = [];
+  data3:any = [];
 
   //cantidad de conductores por ue
   data4:any[]=[];
@@ -39,31 +39,27 @@ export class EstadisticasComponent implements OnInit {
   constructor(
     private _tarjeta:TarjetaService,
     //private _ueducativa:UeducativaService,
-    private _conductor:ConductorService,
-    private _vehiculo:VehiculoService
+    private _driver:ConductorService,
+    private _vehicle:VehiculoService
     ) {
-      this.loadDrivers();
-     }
+      //this.loadDrivers();
+    }
 
   ngOnInit(): void {
-    //this.loadDataAndMonth();
-    //this.loadCountDrivers();
-    //this.loadDriversByGenero();
+    this.loadDriversByGender();
     this.loadVehiclesByType();
-    //this.loadDrivers();
+    this.loadMonthData();
   }
 
-  // loadDataAndMonth(){
-  //   this._tarjeta.getCardsByMonth().subscribe((data:any)=>{
-  //     data.forEach(element => {
-
-  //       const {mes, cantidad} = element;
-
-  //       this.meses.push(mes);
-  //       this.data.push(cantidad);
-  //     });
-  //   })
-  // }
+  loadMonthData(){
+    this._tarjeta.getCardsByMonth().subscribe((data:any)=>{
+      console.log(data);
+      data.forEach((element:any) => {
+        //this.meses.push(mes);
+        this.data1.push(element.cantidad);
+      });
+    })
+  }
 
   // loadCountDrivers(){
   //   this._ueducativa.getCountDriversByUE().subscribe((data:any)=>{
@@ -85,24 +81,33 @@ export class EstadisticasComponent implements OnInit {
   //   });
   // }
 
-  loadDrivers(){
-    this._conductor.getConductores().subscribe((res:any)=>{
-      //this.conductores = res;
-      //this.labels3.push()
-      
-      //console.log(this.conductores);
-    })
-  }
+  // loadDrivers(){
+  //   this._driver.getConductores().subscribe((res:any)=>{
+  //   })
+  // }
 
   loadVehiclesByType(){
-    this._vehiculo.getVehiculosByTService().subscribe((res:any)=>{
+    this._vehicle.getVehiculosByTService().subscribe((res:any)=>{
       //console.log(res);
-      res.forEach(element => {
-        const {tipo, cantidad} = element;
-        this.labels2.push(tipo);
-        this.data2.push(cantidad);
-      });
+      if(!!res){
+        res.forEach(element => {
+          const {tvehiculo, cantidad} = element;
+          this.labels2.push(tvehiculo);
+          this.data2.push(cantidad);
+        });
+      }
     })
   }
 
+  loadDriversByGender(){
+    this._driver.getCountDriversByGender().subscribe((res:any)=>{
+      if(!!res){
+        res.forEach((element:any) => {
+          const {genero, cantidad} = element;
+          this.labels3.push(genero);
+          this.data3.push(cantidad);
+        });
+      }
+    })
+  }
 }

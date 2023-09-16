@@ -30,7 +30,7 @@ module.exports = function(Userdata) {
         var ds = Userdata.dataSource
         var sql = `
         select ud.id, ud.nombres, ud.apellidos, ud.grado, ud.state estado, u.username, u.email, ud.rol, ud.id_user
-        from user_data ud left join user u on ud.id_user = u.id;
+        from user_data ud left join user u on ud.id_user = u.id order by ud.id DESC;
         `;
 
         ds.connector.query(sql, (err, instance) => {

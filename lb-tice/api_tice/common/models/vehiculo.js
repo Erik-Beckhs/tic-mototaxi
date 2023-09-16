@@ -31,9 +31,9 @@ module.exports = function(Vehiculo) {
         Vehiculo.cantTipoServ = (cb) => {
             var ds = Vehiculo.dataSource
             var sql = `
-            select tipo, count(id) cantidad
+            select tvehiculo, count(id) cantidad
             from vehiculo
-            group by tipo;
+            group by tvehiculo;
             `;
     
             ds.connector.query(sql, (err, instance) => {

@@ -24,6 +24,9 @@
     },
     "id_conductor": {
       "type": "number"
+    },
+    "creado_por": {
+      "type": "number"
     }
   },
   "validations": [],
@@ -32,6 +35,11 @@
       "type": "belongsTo",
       "model": "conductor",
       "foreignKey": "id_conductor"
+    },
+    "created_by": {
+      "type": "belongsTo",
+      "model": "user_data",
+      "foreignKey": "creado_por"
     }
   },
   "acls": [],

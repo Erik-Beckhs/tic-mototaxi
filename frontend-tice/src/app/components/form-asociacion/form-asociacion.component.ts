@@ -3,7 +3,8 @@ import { AsociacionService } from 'src/app/services/asociacion.service';
 import { ListsService } from 'src/app/services/lists.service';
 
 import * as moment from 'moment';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-asociacion',
@@ -31,7 +32,8 @@ export class FormAsociacionComponent implements OnInit {
 
   constructor(
     private _asociacion:AsociacionService,
-    private _list:ListsService
+    private _list:ListsService,
+    private router:Router
   ) { 
     
   }
@@ -62,7 +64,7 @@ export class FormAsociacionComponent implements OnInit {
   update(item:any){
     this._asociacion.updateAsociacion(this.id, item).subscribe((res:any)=>{
       this.id = res.id;
-      swal('Información', `Se modificó el registro de manera exitosa`, 'success');
+      Swal.fire('Información', `Se modificó el registro de manera exitosa`, 'success');
       this.loadAsociacion();
     })
   }
@@ -73,7 +75,7 @@ export class FormAsociacionComponent implements OnInit {
       this.id = res.id;
       this.create.emit(this.id);
       this.loadAsociacion();
-      swal("Información", "Se registró la asociación de manera correcta", "success");
+      Swal.fire("Información", "Se registró la asociación de manera correcta", "success");
     }) 
   }
 
@@ -86,7 +88,11 @@ export class FormAsociacionComponent implements OnInit {
       if(this.asociacion.img){
         this.imageTemp = this.asociacion.img;
       }
-    })
+    },
+    (err:any)=>{
+      this.router.navigate(['/dashboard/unions']);
+    }
+    )
   }
 
   onFileChange(event:any) {
@@ -97,7 +103,7 @@ export class FormAsociacionComponent implements OnInit {
     }
 
     if(this.file.type.indexOf('image')<0){
-      swal("Información", "Sólo puede elegir archivos de tipo imagen", "error")
+      Swal.fire("Información", "Sólo puede elegir archivos de tipo imagen", "error")
       this.file=null
       return ;
     }
